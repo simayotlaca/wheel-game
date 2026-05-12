@@ -219,9 +219,6 @@ I submitted slightly later than planned because I refactored the UI from a mostl
 ## 💌 Credits
 
 - **Developer:** Simay
-- **Brief:** Vertigo Games developer case
-- **Third-party code:** [PrimeTween](https://github.com/KyryloKuzyk/PrimeTween) (tween plugin). Everything else under `Assets/Scripts/` and `Assets/Editor/` was written for this project.
-- **Third-party assets / fonts / audio:** _TODO_
 
 ---
 
