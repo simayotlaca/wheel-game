@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd8ff2745a2e42279b44cf6c4bcfe39, type: 3}
+  m_Name: Reward_bayonet_summer
+  m_EditorClassIdentifier: 
+  rewardId: bayonet_summer
+  displayName: Summer Bayonet
+  icon: {fileID: 21300000, guid: 25526cae4c8ed694db9d6c4bfcdc6b6c, type: 3}
+  wheelIcon: {fileID: 21300000, guid: 264f327767b0a4eecbe97fd559ac06a7, type: 3}
+  isDeath: 0
+  visualCategory: 8
+  visualFamily: bayonet
+  rewardKind: 2
+  iconVisualProfile: 7
+  slotCategory: 8
+  minZoneTier: 2
+  minZoneLevel: 1
+  displayAsMultiplier: 1
+  scalesWithZone: 0

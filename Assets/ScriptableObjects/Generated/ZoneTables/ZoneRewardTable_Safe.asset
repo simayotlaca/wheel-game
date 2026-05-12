@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e495b7e26f1743e1b04929090947185, type: 3}
+  m_Name: ZoneRewardTable_Safe
+  m_EditorClassIdentifier: 
+  zoneType: 1
+  targetZone: {fileID: 11400000, guid: ad0cff768df5b45a7b044dd3626382d7, type: 2}
+  poolRules:
+    slotCount: 8
+    allowDeath: 0
+    enforceUniqueIcons: 1
+    useWeightedRandom: 1
+    deathSlots: 0
+    currencySlots: 1
+    consumableSlots: 1
+    throwableSlots: 1
+    weaponSlots: 2
+    compactSlots: 0
+    chestSlots: 1
+    cosmeticSlots: 0
+    goldSlots: 1
+    flexSlots: 1
+    useRecentIconMemory: 1
+    recentIconPenalty: 0.25
+    allowFallbackWhenPoolInsufficient: 1
+  entries:
+  - reward: {fileID: 11400000, guid: 0190d37a01b33445999a15dfe9aab300, type: 2}
+    amount: 2000
+    weight: 2
+  - reward: {fileID: 11400000, guid: 66d823d1fb370430d9368d2f7b6d456d, type: 2}
+    amount: 1
+    weight: 1
+  - reward: {fileID: 11400000, guid: c9004416285cd4c96b62367e10c771ef, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: 9346c36a401c84d13bcfc7ec1d31705c, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
+    amount: 250
+    weight: 2
+  - reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
+    amount: 250
+    weight: 2
+  - reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
+    amount: 250
+    weight: 2
+  - reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
+    amount: 100
+    weight: 1
+  - reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
+    amount: 100
+    weight: 1
+  - reward: {fileID: 11400000, guid: dade88d9f79f84e73b1b18e633630cf0, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: 6b88d4d3ac2c041759a278ad3e1bc3fc, type: 2}
+    amount: 1
+    weight: 1
+  - reward: {fileID: 11400000, guid: f46af70f1c8f744d2bf7657c4a02712e, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: 3d4131ba4cc9048e4976ca704e9a775a, type: 2}
+    amount: 1
+    weight: 1
+  - reward: {fileID: 11400000, guid: 8b8ef9300dabf497c81cd25fbb661658, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: 17d94551bcd17428bae647c3a06889a5, type: 2}
+    amount: 1
+    weight: 2
+  - reward: {fileID: 11400000, guid: c82de789dc0a34bc68e0f2ee9bdee68b, type: 2}
+    amount: 1
+    weight: 1
+  - reward: {fileID: 11400000, guid: d601372a07d8440298ec0c9c9a70c067, type: 2}
+    amount: 10
+    weight: 1
