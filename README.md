@@ -115,28 +115,29 @@ Spin states live in `Assets/Scripts/Wheel/Controller/`: `ReadyState`, `TurningSt
 
 #### 🍓 Project Structure
 
-```
-Assets/
-  Scripts/
-    Core/                  · ObjectPool, GameRules, formatters
-    Wheel/
-      Controller/          · WheelController + state machine
-      Logic/               · WheelLogic + reward sampler (no MonoBehaviour)
-      View/                · WheelView, SliceView, spin animator
-      Config/              · ScriptableObject configs
-      Rewards/             · RewardInventory, currency, formatter
-      UI/                  · HUD, popups, reward list, MetaProgress
-      ExitFlow/            · RunExitController, exit pill, revive
-      MetaProgress/        · per-run weapon point progression
-      Persistence/         · PlayerProgress (PlayerPrefs)
-  Editor/
-    Builders/              · scene + UI builders, validation audits
-    Layout/                · UILayoutBuilder + layout passes
-    Drawers/               · custom inspectors
-  Configs/                 · SO assets
-  Atlases/                 · Sprite Atlas files
-  Scenes/SampleScene.unity · entry scene
-```
+<table align="center" border="0">
+<tr><td>
+
+> **Core Systems**
+> Game rules, object pooling, and shared formatters.
+
+> **Wheel System**
+> Spin flow, state machine, reward sampling, and slice rendering.
+
+> **UI Layer**
+> HUD, popups, reward list, MetaProgress, and button systems.
+
+> **Exit Flow**
+> Run exit, death panels, revive flow.
+
+> **Config Data**
+> ScriptableObject-driven rewards, zones, and theme setup.
+
+> **Editor Tools**
+> Scene & UI builders, layout passes, validation audits.
+
+</td></tr>
+</table>
 
 #### 🎨 Tech Stack
 
