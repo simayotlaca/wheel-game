@@ -107,51 +107,6 @@ Spin states live in `Assets/Scripts/Wheel/Controller/`: `ReadyState`, `TurningSt
 
 **Full Rebuild** &nbsp;·&nbsp; `Vertigo → Build → Full Rebuild` runs `WheelDistributionApplier.Apply()` (zone distributions) and `WheelSceneSetup.Build()` (Canvas, wheel, UI hierarchy).
 
-#### 🍓 Project Structure
-
-<sub>
-
-> **Core Systems** — Game rules, object pooling, and shared formatters.
->
-> **Wheel System** — Spin flow, state machine, reward sampling, and slice rendering.
->
-> **UI Layer** — HUD, popups, reward list, MetaProgress, and button systems.
->
-> **Exit Flow** — Run exit, death panels, revive flow.
->
-> **Config Data** — ScriptableObject-driven rewards, zones, and theme setup.
->
-> **Editor Tools** — Scene & UI builders, layout passes, validation audits.
-
-</sub>
-
-```
-Assets/
-└─ Scripts/
-   ├─ Core/                — ObjectPool, GameRules ve temel sistemler
-   ├─ Wheel/
-   │  ├─ Controller/  ⎫
-   │  ├─ Logic/       ⎬─ Çark mekaniği, state machine, sampler ve spin
-   │  └─ View/        ⎭
-   │  └─ Config/
-   │     ├─ Wheel/    ⎫
-   │     ├─ Zone/     ⎬─ ScriptableObject şablonları
-   │     └─ Reward/   ⎭
-   │  ├─ ExitFlow/       ⎫
-   │  ├─ MetaProgress/   ⎬─ Çıkış/Ölüm akışı, silah ilerlemesi, PlayerPrefs
-   │  └─ Persistence/    ⎭
-   └─ Editor/
-      ├─ Builders/  ⎫
-      ├─ Layout/    ⎬─ Editor araçları: scene + UI builder, inspector
-      └─ Drawers/   ⎭
-
-├─ ScriptableObjects/  ⎫
-├─ Prefabs/            ⎪
-├─ Atlases/            ⎬─ Derlenmiş asset'ler, prefab'lar, kütüphaneler, sahne
-├─ Plugins/            ⎪
-└─ Scenes/             ⎭
-```
-
 #### 🎨 Tech Stack
 
 - **PrimeTween** for UI animation (panels, scale punches, wheel rotation)
