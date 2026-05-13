@@ -6,7 +6,7 @@
 
 <br/>
 
-<img alt="Unity 2021.3.45f2 LTS" src="https://img.shields.io/badge/Unity-2021.3.45f2_LTS-D4799F?style=flat-square&logo=unity&logoColor=white&labelColor=1F1F23"/>&nbsp;<img alt="Platform Android" src="https://img.shields.io/badge/Platform-Android-1F1F23?style=flat-square&logo=android&logoColor=D4799F"/>&nbsp;<img alt="Core Pure C#" src="https://img.shields.io/badge/Core-Pure_C%23-D4799F?style=flat-square&logo=csharp&logoColor=white&labelColor=1F1F23"/>&nbsp;<img alt="Animation PrimeTween" src="https://img.shields.io/badge/Animation-PrimeTween-1F1F23?style=flat-square&labelColor=D4799F"/>&nbsp;<img alt="Aspect 20:9 / 16:9 / 4:3" src="https://img.shields.io/badge/Aspect-20%3A9_·_16%3A9_·_4%3A3-D4799F?style=flat-square&labelColor=1F1F23"/>
+<img alt="Unity 2021 LTS" src="https://img.shields.io/badge/Unity_2021_LTS-D4799F?style=flat-square&logo=unity&logoColor=white"/>&nbsp;<img alt="Android" src="https://img.shields.io/badge/Android-1F1F23?style=flat-square&logo=android&logoColor=D4799F"/>&nbsp;<img alt="Pure C#" src="https://img.shields.io/badge/Pure_C%23-D4799F?style=flat-square&logo=csharp&logoColor=white"/>&nbsp;<img alt="Multi-Aspect UI" src="https://img.shields.io/badge/Multi--Aspect_UI-1F1F23?style=flat-square&logoColor=D4799F"/>
 
 <br/><br/>
 
