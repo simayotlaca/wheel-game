@@ -139,6 +139,38 @@ Spin states live in `Assets/Scripts/Wheel/Controller/`: `ReadyState`, `TurningSt
 </td></tr>
 </table>
 
+<details>
+<summary>Folder tree</summary>
+
+```
+Assets/
+└─ Scripts/
+   ├─ Core/                — ObjectPool, GameRules ve temel sistemler
+   ├─ Wheel/
+   │  ├─ Controller/  ⎫
+   │  ├─ Logic/       ⎬─ Çark mekaniği, state machine, sampler ve spin
+   │  └─ View/        ⎭
+   │  └─ Config/
+   │     ├─ Wheel/    ⎫
+   │     ├─ Zone/     ⎬─ ScriptableObject şablonları
+   │     └─ Reward/   ⎭
+   │  ├─ ExitFlow/       ⎫
+   │  ├─ MetaProgress/   ⎬─ Çıkış/Ölüm akışı, silah ilerlemesi, PlayerPrefs
+   │  └─ Persistence/    ⎭
+   └─ Editor/
+      ├─ Builders/  ⎫
+      ├─ Layout/    ⎬─ Editor araçları: scene + UI builder, inspector
+      └─ Drawers/   ⎭
+
+├─ ScriptableObjects/  ⎫
+├─ Prefabs/            ⎪
+├─ Atlases/            ⎬─ Derlenmiş asset'ler, prefab'lar, kütüphaneler, sahne
+├─ Plugins/            ⎪
+└─ Scenes/             ⎭
+```
+
+</details>
+
 #### 🎨 Tech Stack
 
 - **PrimeTween** for UI animation (panels, scale punches, wheel rotation)
