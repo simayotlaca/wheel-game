@@ -188,3 +188,7 @@ The hot path is the spin loop. Every choice below keeps it allocation-free, draw
 <a href="https://drive.google.com/file/d/1VxuD5v-L_xG7tuDoB4XAF-BY3kkhfsjW/view?usp=sharing"><img alt="Download APK" src="https://img.shields.io/badge/Download-APK-D4799F?style=for-the-badge&logo=android&logoColor=white&labelColor=1F1F23"/></a>
 
 </div>
+
+## License
+This project is proprietary.
+Unauthorized copying or use of this code is prohibited.
