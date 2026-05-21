@@ -189,6 +189,9 @@ The hot path is the spin loop. Every choice below keeps it allocation-free, draw
 
 </div>
 
-## License
-This project is proprietary.
+<h4><span style="color:red">License</span></h4>
+
+<p>
+<b>This project is proprietary.</b><br>
 Unauthorized copying or use of this code is prohibited.
+</p>
