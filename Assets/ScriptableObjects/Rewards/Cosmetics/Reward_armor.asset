@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_armor
   m_EditorClassIdentifier: 
   rewardId: armor
-  displayName: Armor
   icon: {fileID: 21300000, guid: eda431d280f02ae44ba452079c515b32, type: 3}
   wheelIcon: {fileID: 0}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 0
-  visualFamily: vest_armor
-  rewardKind: 6
-  iconVisualProfile: 10
-  slotCategory: 1
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: vest_armor
   displayAsMultiplier: 1
-  scalesWithZone: 1
-  baseAmount: 1
-  amountStepPerZone: 0

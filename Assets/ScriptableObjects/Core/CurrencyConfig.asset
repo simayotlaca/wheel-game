@@ -11,11 +11,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2f5d7a834b14c4e9a6d51c9f0e8a1b2, type: 3}
   m_Name: CurrencyConfig
-  m_EditorClassIdentifier:
-  cashCurrencyId: cash
-  goldCurrencyId: gold
-  coinCurrencyId: coin
+  m_EditorClassIdentifier: 
+  cashReward: {fileID: 11400000, guid: 0190d37a01b33445999a15dfe9aab300, type: 2}
+  goldReward: {fileID: 11400000, guid: d601372a07d8440298ec0c9c9a70c067, type: 2}
   initialCash: 0
   initialGold: 1000
   resetSaveOnLaunch: 1
-  demoCashProgressTarget: 10000
+  cashMinBase: 320
+  cashMaxBase: 520
+  cashMinIncreasePerZone: 0
+  cashMaxIncreasePerZone: 0
+  goldBaseAmount: 1
+  goldIncreaseEveryZones: 3
+  goldIncreaseAmount: 0
+  reviveBaseCost: 50
+  reviveCostIncreasePerRevive: 25

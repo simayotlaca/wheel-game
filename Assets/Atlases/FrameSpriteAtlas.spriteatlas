@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 1
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -44,21 +44,15 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 21300000, guid: 0da7d19e4df971942b33fc0f6a632de4, type: 3}
     - {fileID: 21300000, guid: 1d8745c5f97ef8a4482da353c5af8842, type: 3}
-    - {fileID: 21300000, guid: b6b6d62d5506f6645971f60894f999ab, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 1d8745c5f97ef8a4482da353c5af8842, type: 3}
-  - {fileID: 21300000, guid: b6b6d62d5506f6645971f60894f999ab, type: 3}
-  - {fileID: 21300000, guid: 0da7d19e4df971942b33fc0f6a632de4, type: 3}
   m_PackedSpriteNamesToIndex:
   - ui_card_frame_12px_neutral
-  - ui_card_zone_map_frame
-  - ui_card_frame_4px_zone
   m_RenderDataMap: {}
   m_Tag: FrameSpriteAtlas
   m_IsVariant: 0

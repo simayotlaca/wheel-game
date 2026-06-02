@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: Reward_healthshot_neuro
   m_EditorClassIdentifier: 
   rewardId: healthshot_neuro
-  displayName: Neurostim
-  icon: {fileID: 21300000, guid: 93147aaf3d57a3a46aa1206926e43d55, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 31747a82a76864c1dad7ce534bed6eaf, type: 3}
+  icon: {fileID: 21300000, guid: 31747a82a76864c1dad7ce534bed6eaf, type: 3}
+  wheelIcon: {fileID: 0}
+  listIcon: {fileID: 0}
   isDeath: 0
-  visualCategory: 7
-  visualFamily: healthshot
-  rewardKind: 3
-  iconVisualProfile: 3
   slotCategory: 4
-  minZoneTier: 1
-  minZoneLevel: 1
+  visualCategory: 7
+  minZoneTier: 0
+  visualFamily: healthshot
   displayAsMultiplier: 1
-  scalesWithZone: 1

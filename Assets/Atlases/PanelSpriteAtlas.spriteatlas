@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 1
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -46,37 +46,37 @@ SpriteAtlas:
     packables:
     - {fileID: 21300000, guid: 66e2ad4df79c54719917d3ff063cc38d, type: 3}
     - {fileID: 21300000, guid: 69525e7c14df9af4497f412db5902cf4, type: 3}
-    - {fileID: 21300000, guid: a5e59b30ce2898541886a28ebf8e8b2d, type: 3}
-    - {fileID: 21300000, guid: b144950006802864daa7cba73025341e, type: 3}
-    - {fileID: 21300000, guid: 5a6f6169f51a2c743b083823b4a7ce2b, type: 3}
     - {fileID: 21300000, guid: 28de731265dd06a46acaa15dedc13895, type: 3}
-    - {fileID: 21300000, guid: 02fe64fd1416a4e019810514f98ca109, type: 3}
-    - {fileID: 21300000, guid: 283ff9cf886104f2dbea349cd825875d, type: 3}
     - {fileID: 21300000, guid: 9ef57bc70462942698c9eea2da801923, type: 3}
+    - {fileID: 21300000, guid: 0da7d19e4df971942b33fc0f6a632de4, type: 3}
+    - {fileID: 21300000, guid: 3c8e7a91d2f64b85a017c4e3f5d29b40, type: 3}
+    - {fileID: 21300000, guid: 4b9f8c2e1a5d3f74b8e1c0a2d5b3e6f9, type: 3}
+    - {fileID: 21300000, guid: 73667db0f3608714b9d45f9da9d338e2, type: 3}
+    - {fileID: 21300000, guid: c55d49d7be5e84f4698ce06cef491a3c, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: b144950006802864daa7cba73025341e, type: 3}
-  - {fileID: 21300000, guid: a5e59b30ce2898541886a28ebf8e8b2d, type: 3}
+  - {fileID: 21300000, guid: 73667db0f3608714b9d45f9da9d338e2, type: 3}
+  - {fileID: 21300000, guid: 3c8e7a91d2f64b85a017c4e3f5d29b40, type: 3}
   - {fileID: 21300000, guid: 28de731265dd06a46acaa15dedc13895, type: 3}
   - {fileID: 21300000, guid: 9ef57bc70462942698c9eea2da801923, type: 3}
-  - {fileID: 21300000, guid: 5a6f6169f51a2c743b083823b4a7ce2b, type: 3}
+  - {fileID: 21300000, guid: c55d49d7be5e84f4698ce06cef491a3c, type: 3}
   - {fileID: 21300000, guid: 69525e7c14df9af4497f412db5902cf4, type: 3}
   - {fileID: 21300000, guid: 66e2ad4df79c54719917d3ff063cc38d, type: 3}
-  - {fileID: 21300000, guid: 02fe64fd1416a4e019810514f98ca109, type: 3}
-  - {fileID: 21300000, guid: 283ff9cf886104f2dbea349cd825875d, type: 3}
+  - {fileID: 21300000, guid: 4b9f8c2e1a5d3f74b8e1c0a2d5b3e6f9, type: 3}
+  - {fileID: 21300000, guid: 0da7d19e4df971942b33fc0f6a632de4, type: 3}
   m_PackedSpriteNamesToIndex:
-  - ui_card_panel_zone_current_white
-  - ui_card_panel_zone_current
+  - ui_vfx_offer_shine
+  - ui_progress_bar_bg_silver
   - ui_card_panel_zone_white
   - ui_zone_bar_inner_shadow
-  - ui_card_panel_zone_super
+  - ui_icon_puzzle
   - ui_card_panel_zone_bg
   - bg_reference
-  - ui_image_solid_white
-  - ui_slice_shadow
+  - ui_progress_bar_fill_blue
+  - ui_card_frame_4px_zone
   m_RenderDataMap: {}
   m_Tag: PanelSpriteAtlas
   m_IsVariant: 0

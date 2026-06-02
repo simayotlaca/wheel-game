@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4800000
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MetaProgressIconSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 21300000, guid: 25b01f820e8de4f94996492ab20ea968, type: 3}
+    - {fileID: 21300000, guid: 485b187641d6a4a23b26d7fb916c9aef, type: 3}
+    - {fileID: 21300000, guid: 609c0ecab6f524066b5f395dd2c8cc28, type: 3}
+    - {fileID: 21300000, guid: 79b6a8c91cc0c486c826517cd2ffc6c4, type: 3}
+    - {fileID: 21300000, guid: b513732c58ac74e6990cdd65541e80ad, type: 3}
+    - {fileID: 21300000, guid: dfdae78ee2e0f4d31b1b4a0aec0b4de1, type: 3}
+    - {fileID: 21300000, guid: f97e2ec775c10417b927f01d98b02e41, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 25b01f820e8de4f94996492ab20ea968, type: 3}
+  - {fileID: 21300000, guid: 485b187641d6a4a23b26d7fb916c9aef, type: 3}
+  - {fileID: 21300000, guid: f97e2ec775c10417b927f01d98b02e41, type: 3}
+  - {fileID: 21300000, guid: 79b6a8c91cc0c486c826517cd2ffc6c4, type: 3}
+  - {fileID: 21300000, guid: 609c0ecab6f524066b5f395dd2c8cc28, type: 3}
+  - {fileID: 21300000, guid: b513732c58ac74e6990cdd65541e80ad, type: 3}
+  - {fileID: 21300000, guid: dfdae78ee2e0f4d31b1b4a0aec0b4de1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - UI_Icon_Renders_tier3_sniper
+  - UI_Icon_Renders_tier3_smg
+  - ui_icon_mle_bayonet_summer_vice
+  - UI_Icon_Renders_tier3_shotgun
+  - UI_Icon_Renders_tier2_mle
+  - UI_Icon_Renders_tier2_rifle
+  - UI_Icon_Renders_tier1_shotgun
+  m_RenderDataMap: {}
+  m_Tag: MetaProgressIconSpriteAtlas
+  m_IsVariant: 0

@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_gold
   m_EditorClassIdentifier: 
   rewardId: gold
-  displayName: Gold
-  icon: {fileID: 21300000, guid: 79a0c3aa6c6f9f040999153be9ac6c0d, type: 3}
-  wheelIcon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a92f99e942ca5423986d0cbd0188c232, type: 3}
+  wheelIcon: {fileID: 21300000, guid: a92f99e942ca5423986d0cbd0188c232, type: 3}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 2
   visualCategory: 2
-  visualFamily: 
-  rewardKind: 0
-  iconVisualProfile: 1
-  slotCategory: 9
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: 
   displayAsMultiplier: 1
-  scalesWithZone: 1
-  baseAmount: 5
-  amountStepPerZone: 5

@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_knife
   m_EditorClassIdentifier: 
   rewardId: knife
-  displayName: Knife
   icon: {fileID: 21300000, guid: 194f2f39e560f9c4fae1bcc055b2322b, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 32267291bf0bc4ff4a24f4e0d223e6ce, type: 3}
+  wheelIcon: {fileID: 0}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 4
-  visualFamily: 
-  rewardKind: 1
-  iconVisualProfile: 7
-  slotCategory: 6
   minZoneTier: 1
-  minZoneLevel: 1
+  visualFamily: melee
   displayAsMultiplier: 1
-  scalesWithZone: 1
-  baseAmount: 1
-  amountStepPerZone: 0

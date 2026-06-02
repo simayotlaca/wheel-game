@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_death
   m_EditorClassIdentifier: 
   rewardId: death
-  displayName: DEATH
   icon: {fileID: 21300000, guid: 8fdb33a8b53f4164da88f747ddf06c35, type: 3}
-  wheelIcon: {fileID: 0}
+  wheelIcon: {fileID: 21300000, guid: 8fdb33a8b53f4164da88f747ddf06c35, type: 3}
   listIcon: {fileID: 0}
   isDeath: 1
+  slotCategory: 1
   visualCategory: 3
-  visualFamily: 
-  rewardKind: 7
-  iconVisualProfile: 9
-  slotCategory: 2
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: 
   displayAsMultiplier: 1
-  scalesWithZone: 0
-  baseAmount: 1
-  amountStepPerZone: 0

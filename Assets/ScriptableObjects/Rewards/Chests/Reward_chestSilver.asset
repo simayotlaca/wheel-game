@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Reward_chestSilver
   m_EditorClassIdentifier: 
   rewardId: chestSilver
-  displayName: Silver Chest
   icon: {fileID: 21300000, guid: f76df1b4a8d376049b25ceefa592439f, type: 3}
-  wheelIcon: {fileID: 0}
+  wheelIcon: {fileID: 21300000, guid: f76df1b4a8d376049b25ceefa592439f, type: 3}
+  listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 3
   visualCategory: 6
-  rewardKind: 4
-  iconVisualProfile: 2
-  slotCategory: 7
   minZoneTier: 1
-  minZoneLevel: 1
+  visualFamily: chest
   displayAsMultiplier: 1
-  scalesWithZone: 0

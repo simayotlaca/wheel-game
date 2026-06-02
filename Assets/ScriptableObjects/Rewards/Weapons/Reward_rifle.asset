@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_rifle
   m_EditorClassIdentifier: 
   rewardId: rifle
-  displayName: Rifle
   icon: {fileID: 21300000, guid: 416b1d6751b2f4544bc8fe21a3e6d649, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 39608ce85258f4a748cf42fe6d526927, type: 3}
+  wheelIcon: {fileID: 0}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 4
-  visualFamily: 
-  rewardKind: 1
-  iconVisualProfile: 5
-  slotCategory: 6
   minZoneTier: 1
-  minZoneLevel: 1
+  visualFamily: rifle
   displayAsMultiplier: 1
-  scalesWithZone: 1
-  baseAmount: 1
-  amountStepPerZone: 0

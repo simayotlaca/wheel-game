@@ -12,22 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9882549f3fb4c4d03b025c0c8b995099, type: 3}
   m_Name: WheelConfig
   m_EditorClassIdentifier: 
+  firstZoneIndex: 1
+  maxZoneIndex: 60
   safeZoneInterval: 5
   superZoneInterval: 30
-  normalZone: {fileID: 11400000, guid: 5d8c6fe453a744a94bd07d5abaf579ac, type: 2}
-  safeZone: {fileID: 11400000, guid: ad0cff768df5b45a7b044dd3626382d7, type: 2}
-  superZone: {fileID: 11400000, guid: f7599f1eae49247fb8124878fd12ee52, type: 2}
-  bronzeTheme: {fileID: 11400000, guid: e655ba4398adf4cda91ae25cb04aac82, type: 2}
-  silverTheme: {fileID: 11400000, guid: 479c55fd396e3433399e5db652ba2d8f, type: 2}
-  goldTheme: {fileID: 11400000, guid: 1af9d06a274ab4745974cfc5af78f95d, type: 2}
-  silverStartZone: 10
-  goldStartZone: 20
+  normalZone:
+    tier: 0
+    wheelBase: {fileID: 21300000, guid: 43ae76e44c0c662429d21cfc0df5da64, type: 3}
+    wheelIndicator: {fileID: 21300000, guid: 14ae31b26df51e24583d77a52ba26aed, type: 3}
+  safeZone:
+    tier: 1
+    wheelBase: {fileID: 21300000, guid: a1b4255a3fd8ca14aa437c356e72736a, type: 3}
+    wheelIndicator: {fileID: 21300000, guid: 109f36ac21023f043af899a2f76024e4, type: 3}
+  superZone:
+    tier: 2
+    wheelBase: {fileID: 21300000, guid: f64d685d9065a13438670ae0bd5b1acf, type: 3}
+    wheelIndicator: {fileID: 21300000, guid: 169afa8b6b2dcbd4889cb04f88c62c81, type: 3}
+  rewardTable: {fileID: 11400000, guid: 950501aec84d54ad3981a44440ca5251, type: 2}
+  metaProgressConfig: {fileID: 11400000, guid: 67ba825cb45814b15b3f4e2fdecb7b83, type: 2}
   spinDuration: 3
+  minSpinDurationSeconds: 0.1
   minFullRotations: 4
   maxFullRotations: 6
   rewardPopupShowDuration: 0.35
   rewardPopupHoldDuration: 1
-  reviveCurrencyCost: 25
-  currencyConfig: {fileID: 11400000, guid: 9ac3e4b7d6f24e5fae0c3a8b1d4e9f72, type: 2}
-  animConfig: {fileID: 11400000, guid: 7c8d9e1f2a3b4c5d6e7f8a9b0c1d2e3f, type: 2}
-  exitRules: {fileID: 11400000, guid: b8f25a0d9c3e5f4a0b6e7c9d8a2b3d4e, type: 2}
+  currency_config: {fileID: 11400000, guid: 9ac3e4b7d6f24e5fae0c3a8b1d4e9f72, type: 2}
+  exit_rules:
+    allow_exit_on_normal_zones: 1

@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 1
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -49,7 +49,6 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 51044b988555410592b548b9f0031384, type: 3}
     - {fileID: 21300000, guid: 6c891d78c50e4e58acebc18a17cb65ee, type: 3}
     - {fileID: 21300000, guid: 0b4fa39226ea8894aaa8b0bb7efa7ae1, type: 3}
-    - {fileID: 21300000, guid: c391fbe41192a4d4a859c21d61c89f60, type: 3}
     - {fileID: 21300000, guid: 54b7907adff920a46ad70ce4077aa532, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
@@ -57,7 +56,6 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 0b4fa39226ea8894aaa8b0bb7efa7ae1, type: 3}
-  - {fileID: 21300000, guid: c391fbe41192a4d4a859c21d61c89f60, type: 3}
   - {fileID: 21300000, guid: 0c449d483b744e38ad85742a6f6da5be, type: 3}
   - {fileID: 21300000, guid: 6c891d78c50e4e58acebc18a17cb65ee, type: 3}
   - {fileID: 21300000, guid: 51044b988555410592b548b9f0031384, type: 3}
@@ -65,7 +63,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 836b48eda29c4d71931617bb4be10273, type: 3}
   m_PackedSpriteNamesToIndex:
   - UI_button_grey_standard
-  - UI_button_orange_standard
   - UI_button_collect_orange
   - UI_button_exit_silver
   - UI_button_exit_orange

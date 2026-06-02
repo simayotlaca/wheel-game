@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: Reward_grenade_m26
   m_EditorClassIdentifier: 
   rewardId: grenade_m26
-  displayName: M26 Grenade
   icon: {fileID: 21300000, guid: 8fcb3f11965c905498afbe43efd2aa7e, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 81f9fabc79ed34f9aa8b1c35f6d005c7, type: 3}
+  wheelIcon: {fileID: 21300000, guid: 8fcb3f11965c905498afbe43efd2aa7e, type: 3}
+  listIcon: {fileID: 21300000, guid: 8fcb3f11965c905498afbe43efd2aa7e, type: 3}
   isDeath: 0
-  visualCategory: 9
-  visualFamily: grenade
-  rewardKind: 3
-  iconVisualProfile: 4
-  slotCategory: 5
+  slotCategory: 4
+  visualCategory: 0
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: grenade
   displayAsMultiplier: 1
-  scalesWithZone: 1

@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Reward_submachine
   m_EditorClassIdentifier: 
   rewardId: submachine
-  displayName: Submachine
   icon: {fileID: 21300000, guid: 42d1799d664d6584fa0d8835d503e1cd, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 02f0ba342274443539a49e9a941a8b85, type: 3}
+  wheelIcon: {fileID: 0}
+  listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 4
-  rewardKind: 1
-  iconVisualProfile: 5
-  slotCategory: 6
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: smg
   displayAsMultiplier: 1
-  scalesWithZone: 1

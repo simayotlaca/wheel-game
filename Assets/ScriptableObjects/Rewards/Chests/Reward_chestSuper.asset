@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_chestSuper
   m_EditorClassIdentifier: 
   rewardId: chestSuper
-  displayName: Super Chest
   icon: {fileID: 21300000, guid: 9ddd10e362a59a543ac41e2586cc9ad2, type: 3}
-  wheelIcon: {fileID: 0}
+  wheelIcon: {fileID: 21300000, guid: 9ddd10e362a59a543ac41e2586cc9ad2, type: 3}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 3
   visualCategory: 6
-  visualFamily: 
-  rewardKind: 4
-  iconVisualProfile: 2
-  slotCategory: 7
   minZoneTier: 2
-  minZoneLevel: 1
+  visualFamily: 
   displayAsMultiplier: 1
-  scalesWithZone: 0
-  baseAmount: 1
-  amountStepPerZone: 0

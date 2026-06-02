@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: Reward_healthshot_regen
   m_EditorClassIdentifier: 
   rewardId: healthshot_regen
-  displayName: Regenerator
-  icon: {fileID: 21300000, guid: 95be7aafb930b4d4c9b31a032567f0c2, type: 3}
-  wheelIcon: {fileID: 21300000, guid: 608d1299fae46475e8ab2dfa2f003a3a, type: 3}
+  icon: {fileID: 21300000, guid: 608d1299fae46475e8ab2dfa2f003a3a, type: 3}
+  wheelIcon: {fileID: 0}
+  listIcon: {fileID: 0}
   isDeath: 0
-  visualCategory: 7
-  visualFamily: healthshot
-  rewardKind: 3
-  iconVisualProfile: 3
   slotCategory: 4
+  visualCategory: 7
   minZoneTier: 2
-  minZoneLevel: 1
+  visualFamily: healthshot
   displayAsMultiplier: 1
-  scalesWithZone: 1

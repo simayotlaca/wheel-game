@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Reward_aviator_glasses
   m_EditorClassIdentifier: 
   rewardId: aviator_glasses
-  displayName: Aviator Glasses
   icon: {fileID: 21300000, guid: fd6f8cc61cecc5448ba9a27d12b2f057, type: 3}
   wheelIcon: {fileID: 0}
+  listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 8
-  rewardKind: 5
-  iconVisualProfile: 8
-  slotCategory: 8
   minZoneTier: 2
-  minZoneLevel: 1
+  visualFamily: 
   displayAsMultiplier: 1
-  scalesWithZone: 0

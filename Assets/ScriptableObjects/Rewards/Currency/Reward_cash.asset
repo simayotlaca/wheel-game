@@ -13,19 +13,12 @@ MonoBehaviour:
   m_Name: Reward_cash
   m_EditorClassIdentifier: 
   rewardId: cash
-  displayName: Cash
-  icon: {fileID: 21300000, guid: 2c1bd5a5456082342821ee68c752aff2, type: 3}
-  wheelIcon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 75afb124f62024220be4d5a1a57fe81b, type: 3}
+  wheelIcon: {fileID: 21300000, guid: 75afb124f62024220be4d5a1a57fe81b, type: 3}
   listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 2
   visualCategory: 1
-  visualFamily: 
-  rewardKind: 0
-  iconVisualProfile: 1
-  slotCategory: 3
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: 
   displayAsMultiplier: 1
-  scalesWithZone: 1
-  baseAmount: 150
-  amountStepPerZone: 100

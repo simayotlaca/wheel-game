@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: Reward_pistol
   m_EditorClassIdentifier: 
   rewardId: pistol
-  displayName: Pistol Points
   icon: {fileID: 21300000, guid: bea41dde8677c7a43b3a42fb167f6609, type: 3}
-  wheelIcon: {fileID: 0}
+  wheelIcon: {fileID: 21300000, guid: bea41dde8677c7a43b3a42fb167f6609, type: 3}
+  listIcon: {fileID: 0}
   isDeath: 0
+  slotCategory: 4
   visualCategory: 4
-  visualFamily: pistol
-  rewardKind: 1
-  iconVisualProfile: 6
-  slotCategory: 6
   minZoneTier: 0
-  minZoneLevel: 1
+  visualFamily: pistol
   displayAsMultiplier: 1
-  scalesWithZone: 1

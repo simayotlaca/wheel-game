@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd5419f8195e40aaad6d1fe2af84510, type: 3}
+  m_Name: RewardTableConfig
+  m_EditorClassIdentifier: 
+  normalZone:
+    poolRules:
+      allowDeath: 1
+    quotas:
+      deathSlots: 1
+      currencySlots: 2
+      otherSlots: 1
+      allCardsSlots: 4
+      specialSlots: 0
+    deathPool:
+    - reward: {fileID: 11400000, guid: 39ef8e753ae1d48ab85259726c312d84, type: 2}
+    otherPool:
+    - reward: {fileID: 11400000, guid: 17d94551bcd17428bae647c3a06889a5, type: 2}
+    - reward: {fileID: 11400000, guid: 6b88d4d3ac2c041759a278ad3e1bc3fc, type: 2}
+    - reward: {fileID: 11400000, guid: dade88d9f79f84e73b1b18e633630cf0, type: 2}
+    - reward: {fileID: 11400000, guid: 3d4131ba4cc9048e4976ca704e9a775a, type: 2}
+    - reward: {fileID: 11400000, guid: f46af70f1c8f744d2bf7657c4a02712e, type: 2}
+    allCardsPool:
+    - reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
+    - reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
+    - reward: {fileID: 11400000, guid: c604027e05a164b67bd61aa484fbc345, type: 2}
+    - reward: {fileID: 11400000, guid: d258e2ef88a80a6035aaac39b18afcbc, type: 2}
+    - reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
+    - reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
+    - reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
+    - reward: {fileID: 11400000, guid: 81d2b100385614272999c4ce86ab37e8, type: 2}
+    - reward: {fileID: 11400000, guid: 431b5ff8edf7e42c4b59485d9504b0be, type: 2}
+    specialPool:
+    - reward: {fileID: 11400000, guid: dff473278b53a4d38b181aaeb2268870, type: 2}
+    - reward: {fileID: 11400000, guid: 6af32172a6120446eaa04bdf360b3200, type: 2}
+    - reward: {fileID: 11400000, guid: b8e2f4d9a1c34a4e8d3b5c7f2a9d1e03, type: 2}
+    - reward: {fileID: 11400000, guid: 92baff44193ff42e7b63108ca3b60c22, type: 2}
+    - reward: {fileID: 11400000, guid: f36242d712a06448f89be906cdb5b8fb, type: 2}
+  safeZone:
+    poolRules:
+      allowDeath: 0
+    quotas:
+      deathSlots: 0
+      currencySlots: 2
+      otherSlots: 2
+      allCardsSlots: 4
+      specialSlots: 0
+    deathPool: []
+    otherPool:
+    - reward: {fileID: 11400000, guid: c82de789dc0a34bc68e0f2ee9bdee68b, type: 2}
+    - reward: {fileID: 11400000, guid: 912251c1110aa4fe99b77039dfd9045b, type: 2}
+    - reward: {fileID: 11400000, guid: 8b8ef9300dabf497c81cd25fbb661658, type: 2}
+    - reward: {fileID: 11400000, guid: 873f707af5164c49afc24f246f6e834e, type: 2}
+    - reward: {fileID: 11400000, guid: 6b88d4d3ac2c041759a278ad3e1bc3fc, type: 2}
+    - reward: {fileID: 11400000, guid: dade88d9f79f84e73b1b18e633630cf0, type: 2}
+    - reward: {fileID: 11400000, guid: 3d4131ba4cc9048e4976ca704e9a775a, type: 2}
+    - reward: {fileID: 11400000, guid: f46af70f1c8f744d2bf7657c4a02712e, type: 2}
+    allCardsPool:
+    - reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
+    - reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
+    - reward: {fileID: 11400000, guid: c604027e05a164b67bd61aa484fbc345, type: 2}
+    - reward: {fileID: 11400000, guid: d258e2ef88a80a6035aaac39b18afcbc, type: 2}
+    - reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
+    - reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
+    - reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
+    - reward: {fileID: 11400000, guid: 81d2b100385614272999c4ce86ab37e8, type: 2}
+    - reward: {fileID: 11400000, guid: 431b5ff8edf7e42c4b59485d9504b0be, type: 2}
+    specialPool:
+    - reward: {fileID: 11400000, guid: dff473278b53a4d38b181aaeb2268870, type: 2}
+    - reward: {fileID: 11400000, guid: 6af32172a6120446eaa04bdf360b3200, type: 2}
+    - reward: {fileID: 11400000, guid: b8e2f4d9a1c34a4e8d3b5c7f2a9d1e03, type: 2}
+    - reward: {fileID: 11400000, guid: 92baff44193ff42e7b63108ca3b60c22, type: 2}
+    - reward: {fileID: 11400000, guid: f36242d712a06448f89be906cdb5b8fb, type: 2}
+  superZone:
+    poolRules:
+      allowDeath: 0
+    quotas:
+      deathSlots: 0
+      currencySlots: 2
+      otherSlots: 1
+      allCardsSlots: 3
+      specialSlots: 2
+    deathPool: []
+    otherPool:
+    - reward: {fileID: 11400000, guid: 6b88d4d3ac2c041759a278ad3e1bc3fc, type: 2}
+    - reward: {fileID: 11400000, guid: dade88d9f79f84e73b1b18e633630cf0, type: 2}
+    - reward: {fileID: 11400000, guid: 3d4131ba4cc9048e4976ca704e9a775a, type: 2}
+    - reward: {fileID: 11400000, guid: f46af70f1c8f744d2bf7657c4a02712e, type: 2}
+    - reward: {fileID: 11400000, guid: f5ac1a92f1d5148b190e37b0d24343e4, type: 2}
+    allCardsPool:
+    - reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
+    - reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
+    - reward: {fileID: 11400000, guid: c604027e05a164b67bd61aa484fbc345, type: 2}
+    - reward: {fileID: 11400000, guid: d258e2ef88a80a6035aaac39b18afcbc, type: 2}
+    - reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
+    - reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
+    - reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
+    - reward: {fileID: 11400000, guid: 81d2b100385614272999c4ce86ab37e8, type: 2}
+    - reward: {fileID: 11400000, guid: 431b5ff8edf7e42c4b59485d9504b0be, type: 2}
+    specialPool:
+    - reward: {fileID: 11400000, guid: dff473278b53a4d38b181aaeb2268870, type: 2}
+    - reward: {fileID: 11400000, guid: 6af32172a6120446eaa04bdf360b3200, type: 2}
+    - reward: {fileID: 11400000, guid: b8e2f4d9a1c34a4e8d3b5c7f2a9d1e03, type: 2}
+    - reward: {fileID: 11400000, guid: 92baff44193ff42e7b63108ca3b60c22, type: 2}
+    - reward: {fileID: 11400000, guid: f36242d712a06448f89be906cdb5b8fb, type: 2}
+  sortPriorities:
+    priority_gold: 0
+    priority_cash: 1
+    priority_special: 2
+    priority_all_cards: 3
+    priority_other: 4
+    priority_death: 90
+    priority_default: 99
