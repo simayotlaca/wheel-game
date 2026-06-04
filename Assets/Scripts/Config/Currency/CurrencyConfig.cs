@@ -9,32 +9,28 @@ public class CurrencyConfig : ScriptableObject
     public RewardDefinition cashReward;
     public RewardDefinition goldReward;
 
-    [Header("Initial Wallet (first launch only)")]
-    [Min(0)] public int initialCash = 0;
+    [Header("Initial Wallet")]
+    [Min(0)] public int initialCash;
 
-    [Min(0)] public int initialGold = 200;
+    [Min(0)] public int initialGold;
 
-    public bool resetSaveOnLaunch = false;
+    [Header("Cash Amount")]
+    [Min(0)] public int cashMinBase;
+    [Min(0)] public int cashMaxBase;
 
-    [Header("Cash Progression")]
-    [Min(0)] public int cashMinBase = 320;
-    [Min(0)] public int cashMaxBase = 520;
-    [Min(0)] public int cashMinIncreasePerZone = 0;
-    [Min(0)] public int cashMaxIncreasePerZone = 0;
-
-    [Header("Gold Progression")]
-    [Min(0)] public int goldBaseAmount = 1;
-    [Min(1)] public int goldIncreaseEveryZones = 3;
-    [Min(0)] public int goldIncreaseAmount = 0;
+    [Header("Gold Amount")]
+    [Min(0)] public int goldBaseAmount;
+    [Min(1)] public int goldIncreaseEveryZones;
+    [Min(0)] public int goldIncreaseAmount;
 
     [Header("Card Progression")]
-    [Min(0)] public int cardBaseAmount = 1;
-    [Min(1)] public int cardIncreaseEveryZones = 5;
-    [Min(0)] public int cardIncreaseAmount = 1;
-    [Min(1)] public int cardMaxAmount = 3;
+    [Min(0)] public int cardBaseAmount;
+    [Min(1)] public int cardIncreaseEveryZones;
+    [Min(0)] public int cardIncreaseAmount;
+    [Min(1)] public int cardMaxAmount;
 
     [Header("Revive Cost")]
-    [Min(0)] public int reviveBaseCost = 25;
-    [Min(0)] public int reviveCostIncreasePerRevive = 25;
+    [Min(0)] public int reviveBaseCost;
+    [Min(0)] public int reviveCostIncreasePerRevive;
 }
 }

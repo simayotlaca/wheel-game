@@ -23,9 +23,6 @@ MonoBehaviour:
   labelSuper: {r: 1, g: 1, b: 1, a: 1}
   colorPast: {r: 0.5, g: 0.5, b: 0.55, a: 1}
   colorFuture: {r: 1, g: 1, b: 1, a: 1}
-  activeSlotIndex: 6
-  slideDuration: 0
-  slideAmount: 68
   pastAlphaBase: 0.75
   pastAlphaStep: 0.18
   pastAlphaMin: 0.18

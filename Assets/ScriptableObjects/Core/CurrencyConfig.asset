@@ -16,13 +16,14 @@ MonoBehaviour:
   goldReward: {fileID: 11400000, guid: d601372a07d8440298ec0c9c9a70c067, type: 2}
   initialCash: 0
   initialGold: 1000
-  resetSaveOnLaunch: 1
   cashMinBase: 320
   cashMaxBase: 520
-  cashMinIncreasePerZone: 0
-  cashMaxIncreasePerZone: 0
   goldBaseAmount: 1
   goldIncreaseEveryZones: 3
-  goldIncreaseAmount: 0
+  goldIncreaseAmount: 1
+  cardBaseAmount: 1
+  cardIncreaseEveryZones: 5
+  cardIncreaseAmount: 1
+  cardMaxAmount: 3
   reviveBaseCost: 50
   reviveCostIncreasePerRevive: 25

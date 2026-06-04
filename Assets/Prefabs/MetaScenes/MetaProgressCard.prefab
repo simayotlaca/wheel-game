@@ -120,7 +120,6 @@ MonoBehaviour:
   skin_ready_weapon: {fileID: 441599079078735847}
   skin_ready_count: {fileID: 3022280108292346882}
   canvas_group: {fileID: 100002}
-  anim_config: {fileID: 11400000, guid: 7c8d9e1f2a3b4c5d6e7f8a9b0c1d2e3f, type: 2}
 --- !u!1 &200000
 GameObject:
   m_ObjectHideFlags: 0

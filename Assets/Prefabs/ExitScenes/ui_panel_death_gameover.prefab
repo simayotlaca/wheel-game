@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3131877951911696133}
   m_Layer: 0
-  m_Name: FX
+  m_Name: ui_group_death_fx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2848003463822611508
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996834716499720786}
   m_Layer: 0
-  m_Name: Cost
+  m_Name: ui_group_revive_cost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,6 @@ GameObject:
   - component: {fileID: 7950712363156524310}
   - component: {fileID: 7950712363156524306}
   - component: {fileID: 7950712363156524305}
-  - component: {fileID: 7950712363156524304}
   - component: {fileID: 7950712363156524311}
   m_Layer: 0
   m_Name: ui_image_death_confirm_card
@@ -276,20 +275,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7950712363156524304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950712363156524309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3528f05376e443d58ad6100329cd4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topColor: {r: 0.16470589, g: 0.18431373, b: 0.22745098, a: 1}
-  bottomColor: {r: 0.0627451, g: 0.07058824, b: 0.09411765, a: 1}
 --- !u!114 &7950712363156524311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,7 +985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 480, y: 88}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &7950712363739367012
@@ -1042,7 +1027,6 @@ GameObject:
   - component: {fileID: 7950712363774154395}
   - component: {fileID: 7950712363774154394}
   - component: {fileID: 7950712363774154393}
-  - component: {fileID: 7950712363774154392}
   - component: {fileID: 7950712363774154399}
   m_Layer: 0
   m_Name: ui_button_giveup
@@ -1175,20 +1159,6 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &7950712363774154392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950712363774154397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3528f05376e443d58ad6100329cd4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topColor: {r: 0.93333334, g: 0.9411765, b: 0.9607843, a: 1}
-  bottomColor: {r: 0.65882355, g: 0.6901961, b: 0.7372549, a: 1}
 --- !u!114 &7950712363774154399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,7 +1185,6 @@ GameObject:
   - component: {fileID: 7950712363830969821}
   - component: {fileID: 7950712363830969817}
   - component: {fileID: 7950712363830969816}
-  - component: {fileID: 7950712363830969823}
   - component: {fileID: 7950712363830969822}
   m_Layer: 0
   m_Name: ui_image_death_card
@@ -1233,7 +1202,7 @@ RectTransform:
   m_GameObject: {fileID: 7950712363796176034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7950712364440701083}
@@ -1244,8 +1213,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -94}
-  m_SizeDelta: {x: 430, y: 594}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 380, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7950712363830969817
 CanvasRenderer:
@@ -1268,7 +1237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.95, g: 0.04, b: 0.04, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -1285,20 +1254,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7950712363830969823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950712363796176034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3528f05376e443d58ad6100329cd4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topColor: {r: 0.08, g: 0.085, b: 0.09, a: 1}
-  bottomColor: {r: 0.005, g: 0.006, b: 0.008, a: 1}
 --- !u!114 &7950712363830969822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,7 +1667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -102}
+  m_AnchoredPosition: {x: 0, y: -55}
   m_SizeDelta: {x: 480, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7950712364089865075
@@ -2098,7 +2053,6 @@ GameObject:
   - component: {fileID: 7950712364440701083}
   - component: {fileID: 7950712364440701158}
   - component: {fileID: 7950712364440701157}
-  - component: {fileID: 7950712364440701156}
   m_Layer: 0
   m_Name: ui_image_death_card_fill
   m_TagString: Untagged
@@ -2124,7 +2078,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -16, y: -16}
+  m_SizeDelta: {x: -8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7950712364440701158
 CanvasRenderer:
@@ -2164,20 +2118,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7950712364440701156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950712364440701082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3528f05376e443d58ad6100329cd4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topColor: {r: 0.9098039, g: 0.12156863, b: 0.14117648, a: 1}
-  bottomColor: {r: 0.4862745, g: 0.05490196, b: 0.07058824, a: 1}
 --- !u!1 &7950712364475980480
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +2884,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 800}
+  m_SizeDelta: {x: 480, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7950712365087432976
 CanvasRenderer:
@@ -3043,7 +2983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.45}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.32}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -3073,7 +3013,6 @@ GameObject:
   - component: {fileID: 7950712364185902608}
   - component: {fileID: 7950712364185902615}
   - component: {fileID: 7950712364185902614}
-  - component: {fileID: 7950712364185902613}
   - component: {fileID: 7950712364185902612}
   - component: {fileID: 7950712364185902601}
   m_Layer: 0
@@ -3207,20 +3146,6 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &7950712364185902613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7950712365147000521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3528f05376e443d58ad6100329cd4ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topColor: {r: 0.4, g: 1, b: 0.53333336, a: 1}
-  bottomColor: {r: 0.13333334, g: 0.65882355, b: 0.23529412, a: 1}
 --- !u!114 &7950712364185902612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3283,7 +3208,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -54}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1100, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7950712365166123736
@@ -3419,7 +3344,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 180}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9100000000000000000
 GameObject:
@@ -3585,7 +3510,7 @@ GameObject:
   - component: {fileID: 9100000000000000102}
   - component: {fileID: 9100000000000000103}
   m_Layer: 0
-  m_Name: stroke_h
+  m_Name: ui_image_death_confirm_bracket_tl_stroke_h
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3661,7 +3586,7 @@ GameObject:
   - component: {fileID: 9100000000000000112}
   - component: {fileID: 9100000000000000113}
   m_Layer: 0
-  m_Name: stroke_v
+  m_Name: ui_image_death_confirm_bracket_tl_stroke_v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3737,7 +3662,7 @@ GameObject:
   - component: {fileID: 9100000000000000202}
   - component: {fileID: 9100000000000000203}
   m_Layer: 0
-  m_Name: stroke_h
+  m_Name: ui_image_death_confirm_bracket_tr_stroke_h
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3813,7 +3738,7 @@ GameObject:
   - component: {fileID: 9100000000000000212}
   - component: {fileID: 9100000000000000213}
   m_Layer: 0
-  m_Name: stroke_v
+  m_Name: ui_image_death_confirm_bracket_tr_stroke_v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3889,7 +3814,7 @@ GameObject:
   - component: {fileID: 9100000000000000302}
   - component: {fileID: 9100000000000000303}
   m_Layer: 0
-  m_Name: stroke_h
+  m_Name: ui_image_death_confirm_bracket_bl_stroke_h
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3965,7 +3890,7 @@ GameObject:
   - component: {fileID: 9100000000000000312}
   - component: {fileID: 9100000000000000313}
   m_Layer: 0
-  m_Name: stroke_v
+  m_Name: ui_image_death_confirm_bracket_bl_stroke_v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4041,7 +3966,7 @@ GameObject:
   - component: {fileID: 9100000000000000402}
   - component: {fileID: 9100000000000000403}
   m_Layer: 0
-  m_Name: stroke_h
+  m_Name: ui_image_death_confirm_bracket_br_stroke_h
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4117,7 +4042,7 @@ GameObject:
   - component: {fileID: 9100000000000000412}
   - component: {fileID: 9100000000000000413}
   m_Layer: 0
-  m_Name: stroke_v
+  m_Name: ui_image_death_confirm_bracket_br_stroke_v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

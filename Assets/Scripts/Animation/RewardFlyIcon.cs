@@ -3,24 +3,77 @@ using UnityEngine.UI;
 
 namespace VertigoWheel
 {
+[System.Serializable]
+public struct RewardFlyMotionSettings
+{
+    [Min(0.05f)] public float duration;
+    public bool use_unscaled_time;
+    public AnimationCurve travel_curve;
+    public AnimationCurve offset_curve;
+    public AnimationCurve scale_curve;
+    public AnimationCurve alpha_curve;
+    public Vector2[] icon_offsets;
+
+    internal int IconCount
+    {
+        get
+        {
+            return icon_offsets.Length;
+        }
+    }
+
+    internal Vector3 GetIconOffset(int index)
+    {
+        Vector2 offset = icon_offsets[index];
+        return new Vector3(offset.x, offset.y, 0f);
+    }
+}
+
 [RequireComponent(typeof(CanvasGroup), typeof(Image))]
 public class RewardFlyIcon : MonoBehaviour
 {
     [SerializeField] private RectTransform rt;
     [SerializeField] private Image image;
     [SerializeField] private CanvasGroup cg;
+    [SerializeField] private RewardFlyMotionSettings motion;
 
-    public RectTransform Rect => rt;
+    internal RectTransform Rect
+    {
+        get
+        {
+            return rt;
+        }
+    }
 
-    public CanvasGroup CanvasGroup => cg;
+    internal CanvasGroup CanvasGroup
+    {
+        get
+        {
+            return cg;
+        }
+    }
 
-    public void Configure(Sprite sprite, Vector2 size, Color tint)
+    internal RewardFlyMotionSettings Motion
+    {
+        get
+        {
+            return motion;
+        }
+    }
+
+    internal int IconCount
+    {
+        get
+        {
+            return motion.IconCount;
+        }
+    }
+
+    internal void Configure(Sprite sprite)
     {
         image.sprite = sprite;
-        image.enabled = sprite != null;
-        image.color = tint;
+        image.enabled = true;
 
-        rt.sizeDelta = size;
         rt.localScale = Vector3.one;
         rt.localRotation = Quaternion.identity;
 

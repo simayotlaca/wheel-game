@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 0
   visualFamily: 
   displayAsMultiplier: 1
+  amountMode: 1
+  fixedAmount: 0

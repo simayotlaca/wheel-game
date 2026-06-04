@@ -358,6 +358,84 @@ MonoBehaviour:
   amount_value: {fileID: 1927100598416021674}
   win_glow_overlay: {fileID: 8213905396699515021}
   dim_overlay: {fileID: 4198224786420034971}
+  icon_layout_overrides:
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 1
+    - 2
+    size: {x: 80, y: 80}
+    anchored_position: {x: 0, y: -6}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: armor
+    visual_family: 
+    categories: []
+    size: {x: 65, y: 65}
+    anchored_position: {x: 0, y: -9}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 4
+    size: {x: 65, y: 65}
+    anchored_position: {x: 0, y: -9}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: molotov
+    visual_family: 
+    categories: []
+    size: {x: 70, y: 70}
+    anchored_position: {x: 0, y: -6}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 7
+    size: {x: 70, y: 70}
+    anchored_position: {x: 0, y: -6}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 6
+    size: {x: 86, y: 86}
+    anchored_position: {x: 0, y: -12}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: grenade
+    categories: []
+    size: {x: 70, y: 70}
+    anchored_position: {x: 0, y: 0}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 3
+    size: {x: 86, y: 86}
+    anchored_position: {x: 0, y: -12}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  - reward_id: 
+    visual_family: 
+    categories:
+    - 8
+    size: {x: 86, y: 86}
+    anchored_position: {x: 0, y: 3}
+    amount_anchored_position: {x: 0, y: -54}
+    amount_font_size: 22
+  dim_in_duration: 0.25
+  dim_out_duration: 0.55
+  dim_max_alpha: 0.55
+  dim_tint: {r: 0.45, g: 0.45, b: 0.45, a: 1}
+  glow_speed: 8
+  glow_max_alpha: 0.85
+  glow_hold_seconds: 0.45
 --- !u!1 &6186928401175331760
 GameObject:
   m_ObjectHideFlags: 0

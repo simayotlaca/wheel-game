@@ -55,7 +55,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
-  run_exit_controller: {fileID: 0}
   scroll_rect: {fileID: 8308829186824514751}
   rows_container: {fileID: 8308829188069129234}
   card_prefab: {fileID: 100003, guid: b2d4e6f8a1c3e5d7f9b2d4e6f8a1c3e5, type: 3}

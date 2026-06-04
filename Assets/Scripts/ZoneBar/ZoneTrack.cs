@@ -1,4 +1,3 @@
-using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,9 +6,7 @@ namespace VertigoWheel
 {
 public class ZoneTrack : MonoBehaviour
 {
-    #region setup
     [SerializeField] private RunSession controller;
-    [SerializeField] private RectTransform items_container;
     [SerializeField] private ZoneStyleConfig config;
     [SerializeField] private CanvasGroup zone_group;
     [SerializeField] private Button spin_button;
@@ -19,18 +16,46 @@ public class ZoneTrack : MonoBehaviour
     [SerializeField] private TMP_Text chip_number_value;
     [SerializeField] private Image chip_body_image;
 
-    private Vector2 base_anchored;
-    private int pending_zone;
-    private bool is_sliding;
-    private Tween slide_tween;
-    private bool initial_refreshed;
+    private RunEventPass event_pass;
 
     [SerializeField] private ZoneSlot[] items;
-    #endregion
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        BindSceneComponent(ref spin_button, "ui_button_spin_center");
+    }
+
+    private void BindSceneComponent<T>(ref T target, string object_name) where T : Component
+    {
+        T component = FindSceneComponent<T>(object_name);
+        if (component != null)
+        {
+            target = component;
+        }
+    }
+
+    private T FindSceneComponent<T>(string object_name) where T : Component
+    {
+        if (!gameObject.scene.IsValid()) return null;
+
+        T[] components = FindObjectsOfType<T>(true);
+        for (int i = 0; i < components.Length; i++)
+        {
+            T component = components[i];
+            if (component == null) continue;
+            if (component.gameObject.scene != gameObject.scene) continue;
+            if (component.gameObject.name != object_name) continue;
+            return component;
+        }
+
+        return null;
+    }
+#endif
 
     void Awake()
     {
-        base_anchored = items_container.anchoredPosition;
+        event_pass = new RunEventPass(controller.Events);
         spin_button.onClick.AddListener(OnSpin);
     }
 
@@ -41,33 +66,19 @@ public class ZoneTrack : MonoBehaviour
 
     void OnEnable()
     {
-        ClearAllSlots();
-        controller.OnZoneChanged += HandleZoneChanged;
-        controller.OnStateChanged += HandleRunStateChanged;
-        controller.OnBusyChanged += HandleRunAvailabilityChanged;
-        TryInitialRefresh();
+        event_pass.Subscribe<RunZoneChangedEvent>(HandleZoneChanged);
+        event_pass.Subscribe<RunStateChangedEvent>(HandleRunStateChanged);
+        Refresh(controller.CurrentZone);
         RefreshSpinButton();
-    }
-
-    void Start()
-    {
-        TryInitialRefresh();
     }
 
     void OnDisable()
     {
-        controller.OnZoneChanged -= HandleZoneChanged;
-        controller.OnStateChanged -= HandleRunStateChanged;
-        controller.OnBusyChanged -= HandleRunAvailabilityChanged;
-        TweenLifetime.StopIfAlive(slide_tween);
-        is_sliding = false;
-        initial_refreshed = false;
-        items_container.anchoredPosition = base_anchored;
+        event_pass.ReleaseAll();
     }
 
-    public void SetInteractive(bool active)
+    internal void SetInteractive(bool active)
     {
-        zone_group.alpha = 1f;
         zone_group.blocksRaycasts = active;
         zone_group.interactable = active;
     }
@@ -77,184 +88,66 @@ public class ZoneTrack : MonoBehaviour
         controller.RequestSpin();
     }
 
-    private void TryInitialRefresh()
+    private void HandleZoneChanged(RunZoneChangedEvent evt)
     {
-        if (!initial_refreshed && controller.Zones != null)
-        {
-            Refresh(controller.Zones.CurrentZone);
-            initial_refreshed = true;
-        }
-    }
-
-    private void HandleZoneChanged(int zone)
-    {
-        if (is_sliding)
-        {
-            ApplyPendingZone();
-        }
-        StartSlide(zone);
+        Refresh(evt.current_zone);
         RefreshSpinButton();
     }
 
-    private void HandleRunStateChanged(RunState _)
+    private void HandleRunStateChanged(RunStateChangedEvent evt)
     {
-        RefreshSpinButton();
-    }
-
-    private void HandleRunAvailabilityChanged()
-    {
-        RefreshSpinButton();
+        spin_button.interactable = GameRules.CanTransition(evt.current_state, RunState.Spinning);
     }
 
     private void RefreshSpinButton()
     {
-        bool can_spin = controller.CanSpin;
-        if (spin_button.interactable != can_spin)
-            spin_button.interactable = can_spin;
-    }
-
-    private void StartSlide(int new_zone)
-    {
-        if (config.slideDuration <= 0f)
-        {
-            pending_zone = new_zone;
-            is_sliding = true;
-            ApplyPendingZone();
-        }
-        else
-        {
-            UpdateChipForZone(new_zone);
-
-            int anchor = Mathf.Clamp(config.activeSlotIndex, 0, items.Length - 1);
-            items[anchor].MarkPast(1);
-
-            pending_zone = new_zone;
-            is_sliding = true;
-
-            items_container.anchoredPosition = base_anchored;
-            Vector2 to = base_anchored + new Vector2(-config.slideAmount, 0f);
-
-            slide_tween = Tween.UIAnchoredPosition(items_container, to, config.slideDuration, Ease.OutCubic)
-                .OnComplete(ApplyPendingZone);
-        }
-    }
-
-    private void ApplyPendingZone()
-    {
-        if (is_sliding)
-        {
-            is_sliding = false;
-            Refresh(pending_zone);
-            items_container.anchoredPosition = base_anchored;
-        }
+        spin_button.interactable = controller.CanSpin;
     }
 
     private void UpdateChipForZone(int zone)
     {
-        int first_zone = controller.Zones.FirstZoneIndex;
-        SetChipVisible(zone >= first_zone);
-
-        if (zone >= first_zone)
-        {
-            SetChipZone(zone);
-            SetChipTier(controller.Zones.GetZoneTier(zone));
-        }
-    }
-
-    private void SetChipVisible(bool visible)
-    {
-        if (chip_object.activeSelf != visible)
-        {
-            chip_object.SetActive(visible);
-        }
-    }
-
-    private void SetChipZone(int zone)
-    {
-        chip_number_value.text = zone.ToString();
-    }
-
-    private void SetChipTier(RewardTier tier)
-    {
-        Sprite sprite = config.spriteNeutral;
-        Color tint = config.tintNormal;
-        Color label = config.labelNormal;
-
-        switch (tier)
-        {
-            case RewardTier.Safe:
-                if (config.spriteSafe != null)
-                {
-                    sprite = config.spriteSafe;
-                }
-                tint = Color.white;
-                label = config.labelSafe;
-                break;
-
-            case RewardTier.Super:
-                if (config.spriteSuper != null)
-                {
-                    sprite = config.spriteSuper;
-                }
-                tint = Color.white;
-                label = config.labelSuper;
-                break;
-        }
-
-        if (sprite != null)
-        {
-            chip_body_image.sprite = sprite;
-        }
-
-        chip_body_image.color = tint;
-        chip_number_value.color = label;
-    }
-
-    private void ClearAllSlots()
-    {
-        for (int i = 0; i < items.Length; i++)
-        {
-            items[i].SetEmpty();
-        }
+        chip_object.SetActive(true);
+        TextTransformer.SetNumber(chip_number_value, zone);
+        RewardTier tier = controller.GetZoneTier(zone);
+        ZoneChipStyle style = config.ResolveChipStyle(tier);
+        chip_body_image.sprite = style.sprite;
+        chip_body_image.color = style.body_tint;
+        chip_number_value.color = style.label_color;
     }
 
     private void Refresh(int current_zone)
     {
-        if (items.Length != 0)
+        int anchor = items.Length / 2;
+        int first_zone = controller.FirstZoneIndex;
+        int max_zone = controller.MaxZoneIndex;
+        int zone_count = max_zone - first_zone + 1;
+
+        for (int i = 0; i < items.Length; i++)
         {
-            int total = items.Length;
-            int anchor = Mathf.Clamp(config.activeSlotIndex, 0, total - 1);
-            int first_zone = controller.Zones.FirstZoneIndex;
-            int max_zone = controller.Zones.MaxZoneIndex;
-            int zone_count = max_zone - first_zone + 1;
+            ZoneSlot item = items[i];
+            int offset = i - anchor;
+            int zone = current_zone + offset;
 
-            for (int i = 0; i < total; i++)
+            if (zone < first_zone)
             {
-                ZoneSlot item = items[i];
-                int offset = i - anchor;
-                int zone = current_zone + offset;
-
-                if (zone < first_zone)
-                {
-                    item.SetEmpty();
-                }
-                else
-                {
-                    if (zone > max_zone)
-                    {
-                        zone = first_zone + ((zone - first_zone) % zone_count);
-                    }
-                    RewardTier t = controller.Zones.GetZoneTier(zone);
-                    bool is_active = offset == 0;
-                    bool is_past = offset < 0;
-                    int past_dist = is_past ? -offset : 0;
-
-                    item.SetState(zone, is_active, is_past, past_dist, t);
-                }
+                item.SetEmpty();
+                continue;
             }
 
-            UpdateChipForZone(current_zone);
+            if (zone > max_zone)
+            {
+                zone = first_zone + ((zone - first_zone) % zone_count);
+            }
+
+            RewardTier t = controller.GetZoneTier(zone);
+            bool is_active = offset == 0;
+            bool is_past = offset < 0;
+            int past_dist = is_past ? -offset : 0;
+
+            item.SetState(zone, is_active, is_past, past_dist, t);
         }
+
+        UpdateChipForZone(current_zone);
     }
 }
 }

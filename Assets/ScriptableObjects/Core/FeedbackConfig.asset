@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f573b93b8ef4cd0a9d2b82a695422e4, type: 3}
+  m_Name: FeedbackConfig
+  m_EditorClassIdentifier: 
+  currencyHudTiming:
+    currency_count_up_duration: 0.22
+  rewardListItemTiming:
+    reward_amount_count_up_duration: 0.4
+    reward_text_tick_pulse_strength: 0.07
+    reward_text_tick_pulse_duration: 0.09
+    reward_text_tick_pulse_min_interval: 0.1
+  exitFlowTiming:
+    death_panel_show_duration: 0.22

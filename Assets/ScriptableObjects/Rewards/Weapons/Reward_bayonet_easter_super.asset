@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 2
   visualFamily: easter_bayonet
   displayAsMultiplier: 0
+  amountMode: 3
+  fixedAmount: 0

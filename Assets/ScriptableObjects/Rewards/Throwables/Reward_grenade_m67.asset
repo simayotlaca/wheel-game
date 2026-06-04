@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 0
   visualFamily: grenade
   displayAsMultiplier: 1
+  amountMode: 3
+  fixedAmount: 0

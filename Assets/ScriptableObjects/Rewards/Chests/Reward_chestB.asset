@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 0
   visualFamily: chest
   displayAsMultiplier: 1
+  amountMode: 0
+  fixedAmount: 1

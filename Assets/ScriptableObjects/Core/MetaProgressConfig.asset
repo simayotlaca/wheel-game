@@ -12,94 +12,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e997227c1e90494c9351ec9d41b0b6b, type: 3}
   m_Name: MetaProgressConfig
   m_EditorClassIdentifier: 
+  cardTiming:
+    activate_fade_time: 0.18
+    activate_start_scale: 0.96
+    complete_feedback_duration: 0.9
+    puzzle_punch_scale: 0.2
+    puzzle_punch_duration: 0.4
+    fill_duration: 0.35
+    count_duration: 0.4
   familyPools:
-  - family_key: smg
-    point_reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
+  - point_reward: {fileID: 11400000, guid: 470f29f7e919c480dba4e91bad9b93f7, type: 2}
     cards:
-    - second_dimension_key: smg
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: 485b187641d6a4a23b26d7fb916c9aef, type: 3}
       limit: 7
       initial_amount: 3
       title_text: P90
       tier_text: '[TIER-3]'
       subtitle_text: CRAYZ MONKEY
-  - family_key: shotgun
-    point_reward: {fileID: 11400000, guid: c604027e05a164b67bd61aa484fbc345, type: 2}
+  - point_reward: {fileID: 11400000, guid: c604027e05a164b67bd61aa484fbc345, type: 2}
     cards:
-    - second_dimension_key: shotgun_tier_1
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: dfdae78ee2e0f4d31b1b4a0aec0b4de1, type: 3}
       limit: 7
       initial_amount: 5
       title_text: MAG7
       tier_text: '[TIER-1]'
       subtitle_text: SAVANA
-    - second_dimension_key: shotgun_tier_3
-      chain_order: 1
+    - chain_order: 1
       target_icon: {fileID: 21300000, guid: 79b6a8c91cc0c486c826517cd2ffc6c4, type: 3}
       limit: 3
       initial_amount: 0
       title_text: XM11014
       tier_text: '[TIER-3]'
       subtitle_text: POP ART
-  - family_key: sniper
-    point_reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
+  - point_reward: {fileID: 11400000, guid: d363d520c26ab496eabaaddebb1c0195, type: 2}
     cards:
-    - second_dimension_key: sniper
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: 25b01f820e8de4f94996492ab20ea968, type: 3}
       limit: 7
       initial_amount: 6
       title_text: AWP
       tier_text: '[TIER-3]'
       subtitle_text: COMIC BOOM
-  - family_key: pistol
-    point_reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
+  - point_reward: {fileID: 11400000, guid: f8bd4a5c7a13d4b7fb54d80bb6735887, type: 2}
     cards:
-    - second_dimension_key: pistol
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: 911442d0172387e4bb3298b24192de6d, type: 3}
       limit: 7
       initial_amount: 6
       title_text: Pistol
       tier_text: 
       subtitle_text: 
-  - family_key: melee
-    point_reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
+  - point_reward: {fileID: 11400000, guid: 05941c691a99b47199d21c4d974bea31, type: 2}
     cards:
-    - second_dimension_key: knife
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: 609c0ecab6f524066b5f395dd2c8cc28, type: 3}
       limit: 15
       initial_amount: 13
       title_text: KUKRI
       tier_text: 
       subtitle_text: SPACE
-    - second_dimension_key: melee_tier_2
-      chain_order: 1
+    - chain_order: 1
       target_icon: {fileID: 21300000, guid: f97e2ec775c10417b927f01d98b02e41, type: 3}
       limit: 75
       initial_amount: 43
       title_text: BAYONET
       tier_text: 
       subtitle_text: SUMMER VICE
-  - family_key: rifle
-    point_reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
+  - point_reward: {fileID: 11400000, guid: d4821ebe6fe0e4075a1028f6868787e5, type: 2}
     cards:
-    - second_dimension_key: rifle
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: b513732c58ac74e6990cdd65541e80ad, type: 3}
       limit: 7
       initial_amount: 6
       title_text: M4A1
       tier_text: '[TIER-2]'
       subtitle_text: BEAR
-  - family_key: easter_bayonet
-    point_reward: {fileID: 11400000, guid: b8e2f4d9a1c34a4e8d3b5c7f2a9d1e03, type: 2}
+  - point_reward: {fileID: 11400000, guid: b8e2f4d9a1c34a4e8d3b5c7f2a9d1e03, type: 2}
     cards:
-    - second_dimension_key: easter_bayonet_super
-      chain_order: 0
+    - chain_order: 0
       target_icon: {fileID: 21300000, guid: 47de9656cfe854e728dc284a40d3154f, type: 3}
       limit: 25
       initial_amount: 2

@@ -1,8 +1,8 @@
+using System.Globalization;
 using UnityEngine;
 
 namespace VertigoWheel
 {
-//i start real categories from 1 so empty default 0 does not become a real bucket
 public enum SlotCategory
 {
     Death = 1,
@@ -12,27 +12,26 @@ public enum SlotCategory
     Special,
 }
 
-public static class SlotCategoryHelper
+internal static class SlotCategoryHelper
 {
-    public static int QuotaFor(in RewardTableConfig.QuotaSet quotas, bool allowDeath, SlotCategory cat)
+    private static ZoneRewardEntry[] EmptyEntries = new ZoneRewardEntry[0];
+
+    internal static int QuotaFor(RewardTableConfig.QuotaSet quotas, bool allow_death, SlotCategory cat)
     {
         switch (cat)
         {
-            case SlotCategory.Death:    return allowDeath ? quotas.deathSlots : 0;
+            case SlotCategory.Death:    return allow_death ? quotas.deathSlots : 0;
             case SlotCategory.Currency: return quotas.currencySlots;
             case SlotCategory.Other:    return quotas.otherSlots;
             case SlotCategory.AllCards: return quotas.allCardsSlots;
             case SlotCategory.Special:  return quotas.specialSlots;
         }
+
         return 0;
     }
 
-    public static ZoneRewardEntry[] PoolEntriesFor(RewardTableConfig.ZoneTable zt, SlotCategory cat)
+    internal static ZoneRewardEntry[] PoolEntriesFor(RewardTableConfig.ZoneTable zt, SlotCategory cat)
     {
-        if (zt == null)
-        {
-            return null;
-        }
         switch (cat)
         {
             case SlotCategory.Death:    return zt.deathPool;
@@ -40,7 +39,8 @@ public static class SlotCategoryHelper
             case SlotCategory.AllCards: return zt.allCardsPool;
             case SlotCategory.Special:  return zt.specialPool;
         }
-        return null;
+
+        return EmptyEntries;
     }
 }
 
@@ -63,6 +63,14 @@ public enum RewardVisualCategory
     Cosmetic,
 }
 
+public enum RewardAmountMode
+{
+    Fixed = 0,
+    CashProgression = 1,
+    GoldProgression = 2,
+    CardProgression = 3,
+}
+
 [CreateAssetMenu(fileName = "RewardDefinition", menuName = "Vertigo Wheel/Rewards/Reward Definition")]
 public class RewardDefinition : ScriptableObject
 {
@@ -72,12 +80,72 @@ public class RewardDefinition : ScriptableObject
     public Sprite listIcon;
 
     public bool isDeath;
-    public SlotCategory slotCategory = SlotCategory.AllCards;
-    public RewardVisualCategory visualCategory = RewardVisualCategory.Compact;
-    public RewardTier minZoneTier = RewardTier.Normal;
+    public SlotCategory slotCategory;
+    public RewardVisualCategory visualCategory;
+    public RewardTier minZoneTier;
 
-    public string visualFamily = "";
+    public string visualFamily;
 
-    public bool displayAsMultiplier = true;
+    public bool displayAsMultiplier;
+
+    [Header("Amount")]
+    public RewardAmountMode amountMode;
+    [Min(0)] public int fixedAmount;
+
+    internal Sprite ResolveWheelIcon()
+    {
+        return wheelIcon != null ? wheelIcon : icon;
+    }
+
+    internal Sprite ResolveListIcon()
+    {
+        return listIcon != null ? listIcon : icon;
+    }
+
+    internal string ResolveAmountText(int amount)
+    {
+        if (isDeath)
+        {
+            return string.Empty;
+        }
+
+        if (displayAsMultiplier)
+        {
+            return "x" + NumberFormatter.FormatCompact(amount);
+        }
+
+        switch (visualCategory)
+        {
+            case RewardVisualCategory.Coin:
+            case RewardVisualCategory.Cash:
+                return NumberFormatter.FormatCompact(amount);
+
+            case RewardVisualCategory.Weapon:
+                return "+" + NumberFormatter.FormatCompact(amount);
+
+            case RewardVisualCategory.Compact:
+            case RewardVisualCategory.Chest:
+            case RewardVisualCategory.Consumable:
+            case RewardVisualCategory.Cosmetic:
+                if (amount <= 1)
+                {
+                    return string.Empty;
+                }
+                return "x" + amount.ToString(CultureInfo.InvariantCulture);
+
+            default:
+                return amount.ToString(CultureInfo.InvariantCulture);
+        }
+    }
+
+    internal bool CanAppearIn(RewardTier zone_tier, bool allow_death)
+    {
+        if ((int)minZoneTier > (int)zone_tier)
+        {
+            return false;
+        }
+
+        return !isDeath || allow_death;
+    }
 }
 }

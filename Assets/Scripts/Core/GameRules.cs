@@ -1,115 +1,132 @@
 namespace VertigoWheel
 {
-public static class GameRules
+internal enum RunState
 {
-    public static int NextZoneIndex(WheelConfig config, int current_zone)
+    Ready,
+    PostReviveLocked,
+    Spinning,
+    Reward,
+    DeathGameOver
+}
+
+internal static class GameRules
+{
+    internal class StateMachine
+    {
+        internal RunState State { get; private set; }
+
+        internal StateMachine(RunState initial_state)
+        {
+            State = initial_state;
+        }
+
+        internal bool TryChange(RunState next)
+        {
+            if (next == State || !CanTransition(State, next))
+            {
+                return false;
+            }
+
+            State = next;
+            return true;
+        }
+
+        internal bool Reset(RunState next)
+        {
+            if (next == State)
+            {
+                return false;
+            }
+
+            State = next;
+            return true;
+        }
+    }
+
+    internal static int NextZoneIndex(WheelConfig config, int current_zone)
     {
         return current_zone >= config.MaxZoneIndex ? config.FirstZoneIndex : current_zone + 1;
     }
 
-    public static bool CanSpin(RunState state, bool busy)
+    internal static bool CanLeave(RunState state)
     {
-        return (state == RunState.Ready || state == RunState.PostReviveLocked) && !busy;
+        return state == RunState.Ready;
     }
 
-    public static bool CanLeave(RunState state, bool busy)
+    internal static bool IsDeathFlowActive(RunState state, SpinResult last_result)
     {
-        return state == RunState.Ready && !busy;
+        return state == RunState.DeathGameOver || (state == RunState.Reward && last_result.IsDeath);
     }
 
-    public static bool IsTransitioningToDeath(RunState state, SpinResult last_result)
+    internal static bool CanRevive(RunState state, SpinResult last_result)
     {
-        return state == RunState.DeathGameOver || (state == RunState.Reward && last_result.is_death);
+        return state == RunState.DeathGameOver
+            && last_result.IsDeath
+            && CanTransition(state, RunState.PostReviveLocked);
     }
 
-    public static bool CanRevive(RunState state, SpinResult last_result, bool can_afford)
+    internal static bool CanCompleteRewardFeedback(RunState state, SpinResult last_result)
     {
-        return IsTransitioningToDeath(state, last_result) && can_afford;
+        return !last_result.IsDeath && CanTransition(state, RunState.Ready);
     }
 
-    public static ExitKind ClassifyExit(RunSession controller)
+    internal static RewardSettlement ResolveRewardSettlement(
+        SpinResult result,
+        MetaProgressModel meta_progress_model)
     {
-        if (controller.State != RunState.Ready || controller.IsBusy)
+        ZoneRewardEntry entry = result.entry;
+        MetaProgressModel.ProgressAllocation allocation = meta_progress_model.AllocateProgress(entry.reward, result.amount);
+
+        if (allocation.overflow_amount <= 0)
         {
-            return ExitKind.None;
-        }
-        if (!controller.Zones.CanExitCurrentZone)
-        {
-            return ExitKind.None;
+            return new RewardSettlement(allocation,
+                null,
+                0,
+                reward_list_from_meta_overflow: false);
         }
 
-        bool has_pending = controller.Inventory.HasPending;
-        if (has_pending || controller.HasUnbankedMetaProgress)
+        if (meta_progress_model.IsRewardTracked(entry.reward))
         {
-            return ExitKind.Collect;
+            return new RewardSettlement(allocation,
+                meta_progress_model.OverflowReward,
+                allocation.overflow_amount,
+                reward_list_from_meta_overflow: true);
         }
-        return ExitKind.FreshStart;
+
+        return new RewardSettlement(allocation,
+            entry.reward,
+            allocation.overflow_amount,
+            reward_list_from_meta_overflow: false);
     }
 
-    public static ExitVisibility ResolveExitVisibility(RunSession controller)
+    internal static bool CanTransition(RunState from, RunState to)
     {
-        if (controller.IsTransitioningToDeath)
+        switch (from)
         {
-            return ExitVisibility.Hidden;
-        }
-        if (controller.State != RunState.Ready || controller.IsBusy)
-        {
-            return ExitVisibility.Disabled;
-        }
-        if (!controller.Zones.CanExitCurrentZone)
-        {
-            return ExitVisibility.Disabled;
-        }
-        return ExitVisibility.Normal;
-    }
+            case RunState.Ready:
+                return to == RunState.Spinning;
 
-    public static RewardRouteInfo BuildRewardRoute(MetaProgressModel meta, ZoneRewardEntry entry, MetaProgressModel.ProgressAllocation alloc)
-    {
-        RewardRouteInfo route = default;
-        route.is_tracked_by_meta = meta.IsRewardTracked(entry.reward);
-        route.defer_overflow_until_meta_complete = route.is_tracked_by_meta && alloc.meta_chunks.Count > 0;
-        route.reward_for_reward_list = route.is_tracked_by_meta ? meta.OverflowReward : entry.reward;
-        return route;
-    }
+            case RunState.PostReviveLocked:
+                return to == RunState.Spinning;
 
-    public static bool CanExitZone(RewardTier tier, RunExitRules exit_rules)
-    {
-        return tier == RewardTier.Safe || tier == RewardTier.Super || exit_rules.AllowExitOnNormalZones;
-    }
+            case RunState.Spinning:
+                return to == RunState.Reward;
 
-    public static int ResolveRewardListPriority(
-        RewardDefinition reward,
-        CurrencyConfig currency_config,
-        RewardTableConfig.CategorySortPriorities priorities)
-    {
-        if (priorities == null)
-        {
-            return 99;
-        }
-        if (reward == null)
-        {
-            return priorities.priority_default;
-        }
-        if (currency_config != null && reward == currency_config.goldReward)
-        {
-            return priorities.priority_gold;
-        }
+            case RunState.Reward:
+                return to == RunState.Ready
+                    || to == RunState.DeathGameOver;
 
-        switch (reward.slotCategory)
-        {
-            case SlotCategory.Currency: return priorities.priority_cash;
-            case SlotCategory.Special:  return priorities.priority_special;
-            case SlotCategory.AllCards: return priorities.priority_all_cards;
-            case SlotCategory.Other:    return priorities.priority_other;
-            case SlotCategory.Death:    return priorities.priority_death;
-            default:                    return priorities.priority_default;
+            case RunState.DeathGameOver:
+                return to == RunState.PostReviveLocked;
+
+            default:
+                return false;
         }
     }
 
-    public static WheelVisual GetZoneVisual(WheelConfig config, int zone_idx)
+    internal static WheelVisual GetZoneVisual(WheelConfig config, int zone_idx)
     {
-        //super wins here, because zone 30 is also safe and i wanted it to look special
-        if (config.superZoneInterval > 0 && zone_idx % config.superZoneInterval == 0)
+        if (zone_idx % config.superZoneInterval == 0)
         {
             return config.superZone;
         }
@@ -119,7 +136,7 @@ public static class GameRules
             return config.safeZone;
         }
 
-        if (config.safeZoneInterval > 0 && zone_idx % config.safeZoneInterval == 0)
+        if (zone_idx % config.safeZoneInterval == 0)
         {
             return config.safeZone;
         }
@@ -127,9 +144,37 @@ public static class GameRules
         return config.normalZone;
     }
 
-    public static RewardTier GetZoneTier(WheelConfig config, int zone_idx)
+    internal static RewardTier GetZoneTier(WheelConfig config, int zone_idx)
     {
         return GetZoneVisual(config, zone_idx).tier;
+    }
+}
+
+internal struct RewardSettlement
+{
+    internal MetaProgressModel.ProgressAllocation allocation;
+    internal RewardDefinition reward_list_reward;
+    internal int reward_list_amount;
+    internal bool reward_list_from_meta_overflow;
+
+    internal RewardSettlement(
+        MetaProgressModel.ProgressAllocation allocation,
+        RewardDefinition reward_list_reward,
+        int reward_list_amount,
+        bool reward_list_from_meta_overflow)
+    {
+        this.allocation = allocation;
+        this.reward_list_reward = reward_list_reward;
+        this.reward_list_amount = reward_list_amount;
+        this.reward_list_from_meta_overflow = reward_list_from_meta_overflow;
+    }
+
+    internal bool HasRewardListReward
+    {
+        get
+        {
+            return reward_list_amount > 0;
+        }
     }
 }
 }

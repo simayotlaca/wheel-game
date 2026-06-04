@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 1608537794}
   - component: {fileID: 1608537793}
   m_Layer: 0
-  m_Name: ui_text_zone_number
+  m_Name: ui_text_zone_number_value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,15 +4,12 @@ using UnityEngine;
 
 namespace VertigoWheel
 {
-//cards stay under their reward family, then chain_order sorts inside that group
-#region setup
 [Serializable]
 public class ProgressCardEntry
 {
-    public string second_dimension_key;
     [Min(0)] public int chain_order;
     public Sprite target_icon;
-    [Min(1)] public int limit = 100;
+    [Min(1)] public int limit;
     [Min(0)] public int initial_amount;
     public string title_text;
     public string tier_text;
@@ -23,83 +20,112 @@ public class ProgressCardEntry
 [Serializable]
 public class ProgressFamilyPool
 {
-    public string family_key;
     public RewardDefinition point_reward;
 
     public List<ProgressCardEntry> cards = new();
 }
 
-#endregion
-
-public struct EntryView
+internal struct EntryView
 {
-    public RewardDefinition point_reward;
-    public string family_key;
-    public int chain_order;
-    public string second_dimension_key;
-    public Sprite target_icon;
-    public int limit;
-    public int initial_amount;
-    public string title_text;
-    public string tier_text;
-    public string subtitle_text;
+    internal RewardDefinition point_reward;
+    internal int chain_order;
+    internal Sprite target_icon;
+    internal int limit;
+    internal int initial_amount;
+    internal string title_text;
+    internal string tier_text;
+    internal string subtitle_text;
+}
+
+[Serializable]
+public struct MetaProgressCardTiming
+{
+    [Min(0f)] public float activate_fade_time;
+    [Range(0.1f, 1f)] public float activate_start_scale;
+    [Min(0f)] public float complete_feedback_duration;
+    [Min(0f)] public float puzzle_punch_scale;
+    [Min(0f)] public float puzzle_punch_duration;
+    [Min(0f)] public float fill_duration;
+    [Min(0f)] public float count_duration;
 }
 
 
 [CreateAssetMenu(fileName = "MetaProgressConfig", menuName = "Vertigo Wheel/Config/Meta Progress Config")]
 public class MetaProgressConfig : ScriptableObject
 {
+    [Header("Card Animation")]
+    public MetaProgressCardTiming cardTiming;
+
+    [Header("Cards")]
     public List<ProgressFamilyPool> familyPools = new();
 
     public RewardDefinition overflowReward;
 
-    private List<EntryView> effective_entries = new();
+    private EntryView[] entries = Array.Empty<EntryView>();
 
-    public IReadOnlyList<EntryView> ConvertedArray => effective_entries;
+    internal EntryView[] Entries
+    {
+        get
+        {
+            return entries;
+        }
+    }
 
     private void OnEnable()
     {
-        ArraySolver();
+        RefreshEntries();
     }
 
     private void OnValidate()
     {
-        ArraySolver();
+        RefreshEntries();
     }
 
-    private void ArraySolver()
+    private void RefreshEntries()
     {
-        effective_entries.Clear();
-        //i flatten the family list here, easier for panel to read later
+        entries = Array.Empty<EntryView>();
+
+        EntryView[] next_entries = new EntryView[CountEntries()];
+        int next_entry = 0;
+
         foreach (var pool in familyPools)
         {
-            var sortedCards = new List<ProgressCardEntry>(pool.cards);
-            sortedCards.Sort(s_compareByChainOrder);
+            var sorted_cards = new List<ProgressCardEntry>(pool.cards);
+            sorted_cards.Sort(CompareByChainOrder);
 
-            foreach (var card in sortedCards)
+            foreach (var card in sorted_cards)
             {
-                effective_entries.Add(new EntryView
+                next_entries[next_entry] = new EntryView
                 {
                     point_reward = pool.point_reward,
-                    family_key = pool.family_key,
                     chain_order = card.chain_order,
-                    second_dimension_key = card.second_dimension_key,
                     target_icon = card.target_icon,
                     limit = card.limit,
                     initial_amount = card.initial_amount,
                     title_text = card.title_text,
                     tier_text = card.tier_text,
                     subtitle_text = card.subtitle_text,
-                });
+                };
+                next_entry++;
             }
         }
-    }
 
-    private static readonly System.Comparison<ProgressCardEntry> s_compareByChainOrder = CompareByChainOrder;
+        entries = next_entries;
+    }
 
     private static int CompareByChainOrder(ProgressCardEntry a, ProgressCardEntry b)
     {
         return a.chain_order.CompareTo(b.chain_order);
+    }
+
+    private int CountEntries()
+    {
+        int count = 0;
+        foreach (var pool in familyPools)
+        {
+            count += pool.cards.Count;
+        }
+        return count;
     }
 }
 }

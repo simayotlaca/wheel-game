@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 2
   visualFamily: healthshot
   displayAsMultiplier: 1
+  amountMode: 3
+  fixedAmount: 0

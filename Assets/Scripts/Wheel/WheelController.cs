@@ -1,4 +1,3 @@
-using System;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,35 +6,76 @@ namespace VertigoWheel
 {
 public class WheelController : MonoBehaviour
 {
+    private const float FullCircleDegrees = 360f;
+
+    [Header("Flow")]
+    [SerializeField] private RunSession controller;
+
     [Header("Wheel Parts")]
     [SerializeField] private RectTransform rotating_reward_layer;
     [SerializeField] private Image wheel_base_image;
     [SerializeField] private Image wheel_indicator_image;
     [SerializeField] private SliceView slice_prefab;
 
-    [Header("Indicator Kick")]
-    [SerializeField] private RectTransform indicator_target;
-    [SerializeField] private ConfigAnimation anim_config;
-
     private ObjectPool<SliceView> slice_pool;
     private Tween spin_tween;
-    private Action on_spin_complete;
-    private int last_tick_slice = -1;
-    private bool kick_in_flight;
-
-    private int ActiveSliceCount => slice_pool != null ? slice_pool.ActiveCount : 0;
+    private RunEventPass event_pass;
 
     void Awake()
     {
-        if (indicator_target != null)
-        {
-            indicator_target.localRotation = Quaternion.identity;
-        }
-        slice_pool = new ObjectPool<SliceView>(slice_prefab, rotating_reward_layer, 1);
+        slice_pool = new ObjectPool<SliceView>(slice_prefab, rotating_reward_layer, 0);
+        event_pass = new RunEventPass(controller.Events);
     }
 
-    public void BuildForZone(WheelVisual zone, WheelResultPicker.ComputedSlot[] slots)
+    private void OnEnable()
     {
+        event_pass.Subscribe<RunPendingClearedEvent>(HandlePendingCleared);
+        event_pass.Subscribe<RunDeathHitEvent>(HandleDeathHit);
+    }
+
+    private void OnDisable()
+    {
+        event_pass.ReleaseAll();
+        TweenLifetime.StopIfAlive(spin_tween);
+    }
+
+    internal void BuildForZone(WheelVisual zone, WheelResultPicker.ComputedSlot[] slots)
+    {
+        if (isActiveAndEnabled)
+        {
+            BuildSlices(zone, slots);
+        }
+    }
+
+    internal void RevealSlice(int slice_idx)
+    {
+        if (isActiveAndEnabled)
+        {
+            HighlightSlice(slice_idx);
+            ShineSlice(slice_idx);
+        }
+    }
+
+    private void HandlePendingCleared(RunPendingClearedEvent _)
+    {
+        CleanupRunView();
+    }
+
+    private void HandleDeathHit(RunDeathHitEvent _)
+    {
+        CleanupRunView();
+    }
+
+    private void CleanupRunView()
+    {
+        TweenLifetime.StopIfAlive(spin_tween);
+        ClearShine();
+    }
+
+    private void BuildSlices(WheelVisual zone, WheelResultPicker.ComputedSlot[] slots)
+    {
+        ClearShine();
+        rotating_reward_layer.localEulerAngles = Vector3.zero;
         wheel_base_image.sprite = zone.wheelBase;
         wheel_indicator_image.sprite = zone.wheelIndicator;
 
@@ -43,204 +83,74 @@ public class WheelController : MonoBehaviour
         slice_pool.EnsureCapacity(needed);
         slice_pool.ReleaseAll();
 
-        if (needed != 0)
+        float angle_per_slice = FullCircleDegrees / needed;
+        for (int i = 0; i < needed; i++)
         {
-            float angle_per_slice = 360f / needed;
-            for (int i = 0; i < needed; i++)
-            {
-                WheelResultPicker.ComputedSlot slot = slots[i];
-                SliceView slice = slice_pool.Acquire();
-                if (slice == null)
-                {
-                    return;
-                }
-                slice.Initialize(anim_config);
-                slice.transform.SetSiblingIndex(i + 1);
-                slice.SetData(slot, i * angle_per_slice);
-            }
+            WheelResultPicker.ComputedSlot slot = slots[i];
+            SliceView slice = slice_pool.Acquire();
+            slice.transform.SetSiblingIndex(i + 1);
+            slice.SetData(slot, i * angle_per_slice);
         }
     }
 
-    public void SpinTo(int slice_idx, float dur, float min_dur, float min_rot, float max_rot, Action done_cb)
+    internal void SpinToSlice(int slice_idx, WheelSpinTiming timing)
     {
-        int slice_count = ActiveSliceCount;
-        if (slice_count <= 0)
-        {
-            done_cb.Invoke();
-            return;
-        }
+        int slice_count = slice_pool.ActiveCount;
 
-        ResetIndicatorKick();
-
-        float angle_per_slice = 360f / slice_count;
-        float target_slice_angle = -(slice_idx * angle_per_slice);
-
-        float current_angle = NormalizeAngle(rotating_reward_layer.localEulerAngles.z);
-        float rotations = UnityEngine.Random.Range(min_rot, max_rot);
-        float end_angle = current_angle + (-360f * rotations);
-        float end_normalized = NormalizeAngle(end_angle);
-        float adjust = NormalizeAngle(target_slice_angle - end_normalized);
-        if (adjust > 180f)
-        {
-            adjust -= 360f;
-        }
-        float final_end_angle = end_angle + adjust;
-
-        on_spin_complete = done_cb;
-        last_tick_slice = -1;
+        int min_rotations = Mathf.RoundToInt(timing.minFullRotations);
+        int max_rotations = Mathf.RoundToInt(timing.maxFullRotations);
+        int rotations = UnityEngine.Random.Range(min_rotations, max_rotations + 1);
+        float end_angle = -(rotations * FullCircleDegrees + slice_idx * (FullCircleDegrees / slice_count));
 
         TweenLifetime.StopIfAlive(spin_tween);
 
-        float delta_angle = Mathf.Abs(final_end_angle - current_angle);
-        float reference_delta = 360f * (min_rot + max_rot) * 0.5f;
-        float spin_dur = dur;
-        if (reference_delta > 0.01f)
-        {
-            spin_dur = Mathf.Max(min_dur, dur * (delta_angle / reference_delta));
-        }
-
         spin_tween = Tween.LocalEulerAngles(
                 rotating_reward_layer,
-                new Vector3(0f, 0f, current_angle),
-                new Vector3(0f, 0f, final_end_angle),
-                spin_dur,
-                anim_config.wheelSpinCurve)
-            .OnUpdate(this, (target, _) => target.HandleSpinTweenUpdate())
+                Vector3.zero,
+                new Vector3(0f, 0f, end_angle),
+                timing.duration,
+                timing.curve)
             .OnComplete(OnSpinTweenComplete);
     }
 
-    public void HighlightSlice(int slice_idx)
+    private void HighlightSlice(int slice_idx)
     {
-        if (slice_idx >= 0 && slice_idx < ActiveSliceCount)
-        {
-            SliceView slice = GetSlice(slice_idx);
-            if (slice != null)
-            {
-                slice.Highlight();
-            }
-        }
+        GetSlice(slice_idx).Highlight();
     }
 
-    public void ShineSlice(int win_idx)
+    private void ShineSlice(int win_idx)
     {
         int n = slice_pool.ActiveCount;
         for (int i = 0; i < n; i++)
         {
             SliceView slice = slice_pool.GetActive(i);
-            if (slice != null)
-            {
-                slice.SetDimmed(i != win_idx);
-            }
+            slice.SetDimmed(i != win_idx);
         }
     }
 
-    public void ClearShine()
+    private void ClearShine()
     {
         int n = slice_pool.ActiveCount;
         for (int i = 0; i < n; i++)
         {
             SliceView slice = slice_pool.GetActive(i);
-            if (slice != null)
-            {
-                slice.SetDimmed(false);
-            }
+            slice.SetDimmed(false);
         }
     }
 
-    public bool TryGetSliceWorldPosition(int slice_idx, out Vector3 world)
+    internal Vector3 GetSliceWorldPosition(int slice_idx)
     {
-        world = Vector3.zero;
-        SliceView slice = GetSlice(slice_idx);
-        if (slice != null)
-        {
-            world = slice.IconWorldPosition;
-            return true;
-        }
-        return false;
+        return GetSlice(slice_idx).IconWorldPosition;
     }
 
     private SliceView GetSlice(int index)
     {
-        if (index >= 0 && index < ActiveSliceCount)
-        {
-            return slice_pool.GetActive(index);
-        }
-        return null;
+        return slice_pool.GetActive(index);
     }
 
     private void OnSpinTweenComplete()
     {
-        ResetIndicatorKick();
-        Action cb = on_spin_complete;
-        on_spin_complete = null;
-        if (cb != null)
-        {
-            cb.Invoke();
-        }
-    }
-
-    private void HandleSpinTweenUpdate()
-    {
-        float angle = rotating_reward_layer.localEulerAngles.z;
-
-        int slice_count = ActiveSliceCount;
-        if (slice_count > 0)
-        {
-            float per_slice = 360f / slice_count;
-            int current_slice = (int)(angle / per_slice);
-            if (last_tick_slice >= 0 && current_slice != last_tick_slice)
-            {
-                TriggerIndicatorKick();
-            }
-            last_tick_slice = current_slice;
-        }
-    }
-
-    private void ResetIndicatorKick()
-    {
-        kick_in_flight = false;
-        if (indicator_target != null)
-        {
-            Tween.StopAll(onTarget: indicator_target);
-            indicator_target.localRotation = Quaternion.identity;
-        }
-    }
-
-    private void TriggerIndicatorKick()
-    {
-        if (indicator_target == null)
-        {
-            return;
-        }
-
-        if (!kick_in_flight)
-        {
-            kick_in_flight = true;
-            Tween.LocalRotation(indicator_target, new Vector3(0f, 0f, anim_config.kickAngle), anim_config.kickDuration, Ease.OutQuad)
-                .OnComplete(OnKickPeak);
-        }
-    }
-
-    private void OnKickPeak()
-    {
-        Tween.LocalRotation(indicator_target, Vector3.zero, anim_config.kickDuration, Ease.OutQuad)
-            .OnComplete(OnKickReturn);
-    }
-
-    private void OnKickReturn()
-    {
-        indicator_target.localRotation = Quaternion.identity;
-        kick_in_flight = false;
-    }
-
-    private static float NormalizeAngle(float a)
-    {
-        a %= 360f;
-        if (a < 0f)
-        {
-            a += 360f;
-        }
-        return a;
+        controller.NotifyWheelSpinCompleted();
     }
 
 }

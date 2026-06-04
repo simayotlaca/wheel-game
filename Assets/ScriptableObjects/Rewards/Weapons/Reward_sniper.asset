@@ -22,3 +22,5 @@ MonoBehaviour:
   minZoneTier: 1
   visualFamily: sniper
   displayAsMultiplier: 1
+  amountMode: 3
+  fixedAmount: 0

@@ -1,453 +1,340 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 namespace VertigoWheel
 {
-public enum RunState
-{
-    Ready,
-    PostReviveLocked,
-    Spinning,
-    Landing,
-    Reward,
-    DeathGameOver
-}
-
 public class RunSession : MonoBehaviour
 {
-    #region setup
     [Header("Config")]
     [SerializeField] private WheelConfig config;
 
-    [Header("RNG (0 = time-based)")]
-    [SerializeField] private int seed = 0;
-
     [Header("Scene References")]
     [SerializeField] private WheelController wheel_controller;
-
+    [SerializeField] private RewardFeedbackController reward_feedback;
     private WheelResultPicker result_picker;
     private ZoneManager zone_manager;
     private CurrencyWallet inventory;
     private ReviveSystem revive_system;
     private MetaProgressModel meta_progress_model;
-    private CurrencyRules currency_rules;
 
-    private RunState current_state;
-    private Coroutine state_transition_routine;
-
+    private RunEventBus events = new RunEventBus();
+    private GameRules.StateMachine state_machine = new GameRules.StateMachine(RunState.Ready);
     private SpinResult last_result;
+    private RewardSettlement last_settlement;
 
-    private BusySource active_busy_sources;
-
-    public event Action<int> OnZoneChanged;
-    public event Action<RunState> OnStateChanged;
-    public event Action OnBusyChanged;
-    public event Action<SpinResult, ZoneRewardEntry, MetaProgressModel.ProgressAllocation, RewardRouteInfo> OnRewardEarned;
-    public event Action OnDeathHit;
-    public event Action OnRewardsBanked;
-
-    public event Action OnRunEnded;
-
-    public event Action OnRevived;
-
-    public WheelConfig Config => config;
-
-    public RunState State => current_state;
-
-    public ZoneManager Zones => zone_manager;
-
-    public CurrencyWallet Inventory => inventory;
-
-    public MetaProgressModel MetaProgress => meta_progress_model;
-
-    public bool CanSpin
+    internal IRunEventReader Events
     {
         get
         {
-            return GameRules.CanSpin(current_state, IsBusy);
+            return events;
         }
     }
 
-    public bool CanLeave => GameRules.CanLeave(current_state, IsBusy);
-
-    public bool IsBusy => active_busy_sources != BusySource.None;
-
-    public void SetBusy(BusySource source, bool on)
+    internal CurrencyConfig CurrencyConfig
     {
-        if (source == BusySource.None)
+        get
         {
-            return;
+            return config.currency_config;
         }
-
-        bool was_busy = IsBusy;
-
-        if (on)
-        {
-            active_busy_sources |= source;
-        }
-        else
-        {
-            active_busy_sources &= ~source;
-        }
-
-        if (IsBusy != was_busy)
-            OnBusyChanged?.Invoke();
     }
 
-    public bool HasUnbankedMetaProgress => meta_progress_model.HasUnbankedProgress;
+    internal MetaProgressModel MetaProgress
+    {
+        get
+        {
+            return meta_progress_model;
+        }
+    }
 
-    public int CurrentReviveCost => revive_system.CurrentCost;
+    internal MetaProgressConfig MetaProgressConfig
+    {
+        get
+        {
+            return config.metaProgressConfig;
+        }
+    }
 
-    public bool CanAffordRevive()
+    internal CurrencyHudTiming CurrencyHudTiming
+    {
+        get
+        {
+            return config.feedbackConfig.currencyHudTiming;
+        }
+    }
+
+    internal RewardListItemTiming RewardListItemTiming
+    {
+        get
+        {
+            return config.feedbackConfig.rewardListItemTiming;
+        }
+    }
+
+    internal ExitFlowTiming ExitFlowTiming
+    {
+        get
+        {
+            return config.feedbackConfig.exitFlowTiming;
+        }
+    }
+
+    internal bool CanSpin
+    {
+        get
+        {
+            return GameRules.CanTransition(state_machine.State, RunState.Spinning);
+        }
+    }
+
+    internal bool CanLeave
+    {
+        get
+        {
+            return GameRules.CanLeave(state_machine.State);
+        }
+    }
+
+    internal bool HasPendingRewards
+    {
+        get
+        {
+            return inventory.HasPending || meta_progress_model.HasUnbankedProgress;
+        }
+    }
+
+    internal bool HasPendingRewardList
+    {
+        get
+        {
+            return inventory.HasPending;
+        }
+    }
+
+    internal int CurrentZone
+    {
+        get
+        {
+            return zone_manager.CurrentZone;
+        }
+    }
+
+    internal int FirstZoneIndex
+    {
+        get
+        {
+            return zone_manager.FirstZoneIndex;
+        }
+    }
+
+    internal int MaxZoneIndex
+    {
+        get
+        {
+            return zone_manager.MaxZoneIndex;
+        }
+    }
+
+    internal int CurrentReviveCost
+    {
+        get
+        {
+            return revive_system.CurrentCost;
+        }
+    }
+
+    internal bool CanAffordRevive()
     {
         return revive_system.CanAfford(inventory);
     }
-    #endregion
+
+    internal RewardTier GetZoneTier(int zone_idx)
+    {
+        return zone_manager.GetZoneTier(zone_idx);
+    }
 
     void Awake()
     {
-        if (wheel_controller == null)
-        {
-            Debug.LogError("no WheelController assigned; RunSession drives the wheel through it");
-        }
-
-        currency_rules = new CurrencyRules(config.currency_config);
-        zone_manager = new ZoneManager(config);
-        inventory = new CurrencyWallet(config.currency_config, config.rewardTable, config.metaProgressConfig);
-        result_picker = new WheelResultPicker(seed, currency_rules, config.rewardTable);
-        revive_system = new ReviveSystem(currency_rules);
-
-        current_state = RunState.Ready;
-
-        LoadOrSeedInventory();
-
-        if (config.metaProgressConfig == null)
-        {
-            throw new System.InvalidOperationException("WheelConfig.metaProgressConfig is not assigned; set the MetaProgressConfig asset on it");
-        }
-        meta_progress_model = new MetaProgressModel(config.metaProgressConfig.ConvertedArray, config.metaProgressConfig.overflowReward, PlayerProgress.LoadProgression());
+        InitializeRuntime();
     }
 
     void Start()
     {
-        RefreshZoneView();
+        BeginRun();
     }
 
-    private void LoadOrSeedInventory()
+    private void InitializeRuntime()
     {
+        CurrencyRules currency_rules = new CurrencyRules(config.currency_config);
+        zone_manager = new ZoneManager(config);
+        inventory = new CurrencyWallet(config.currency_config);
+        result_picker = new WheelResultPicker(currency_rules, config.rewardTable);
+        revive_system = new ReviveSystem(currency_rules);
         CurrencyConfig currency_cfg = config.currency_config;
-        if (currency_cfg.resetSaveOnLaunch)
-        {
-            PlayerProgress.Clear();
-        }
-
-        if (PlayerProgress.Load(out int saved_cash, out int saved_gold, out var saved_banked, out int saved_revives))
-        {
-            Inventory.RestoreFrom(saved_cash, saved_gold, saved_banked);
-            revive_system.RestoreCount(saved_revives);
-        }
-        else
-        {
-            Inventory.RestoreFrom(currency_cfg.initialCash, currency_cfg.initialGold, null);
-        }
+        inventory.ResetTo(currency_cfg.initialCash, currency_cfg.initialGold);
+        meta_progress_model = new MetaProgressModel(config.metaProgressConfig.Entries,
+            config.metaProgressConfig.overflowReward);
     }
 
-    private void ChangeState(RunState next)
+    private void BeginRun()
     {
-        if (next != current_state)
-        {
-            StopStateTransition();
-            current_state = next;
-            OnStateChanged?.Invoke(current_state);
-            ScheduleStateTransition(current_state);
-        }
+        LoadCurrentZone();
+        PublishCurrencyChanged();
     }
 
-    private void ScheduleStateTransition(RunState state)
+    private bool ChangeState(RunState next)
     {
-        if (state == RunState.Landing)
+        if (state_machine.TryChange(next))
         {
-            state_transition_routine = StartCoroutine(WaitThenRun(config.rewardPopupShowDuration, FinishLanding));
-        }
-        else if (state == RunState.Reward)
-        {
-            state_transition_routine = StartCoroutine(WaitThenRun(config.rewardPopupHoldDuration, FinishReward));
-        }
-    }
-
-    private IEnumerator WaitThenRun(float delay, Action callback)
-    {
-        if (delay > 0f)
-        {
-            yield return new WaitForSeconds(delay);
-        }
-        else
-        {
-            yield return null;
-        }
-
-        state_transition_routine = null;
-        callback?.Invoke();
-    }
-
-    private void StopStateTransition()
-    {
-        if (state_transition_routine != null)
-        {
-            StopCoroutine(state_transition_routine);
-            state_transition_routine = null;
-        }
-    }
-
-    private void FinishLanding()
-    {
-        ChangeState(RunState.Reward);
-        ApplySpinResult();
-    }
-
-    private void FinishReward()
-    {
-        if (last_result.is_death)
-        {
-            ChangeState(RunState.DeathGameOver);
-        }
-        else
-        {
-            ChangeState(RunState.Ready);
-            AdvanceZone();
-        }
-    }
-
-    public void RequestSpin()
-    {
-        if (!CanSpin)
-        {
-            return;
-        }
-        SpinResult result = result_picker.Spin();
-        if (!result.is_valid)
-        {
-            Debug.LogError("wheel spin requested but no valid slots loaded, config invariant broken");
-            return;
-        }
-        last_result = result;
-
-        ChangeState(RunState.Spinning);
-
-        wheel_controller.SpinTo(
-            result.slice_idx,
-            config.spinDuration,
-            config.minSpinDurationSeconds,
-            config.minFullRotations,
-            config.maxFullRotations,
-            OnSpinAnimationComplete);
-    }
-
-    public bool RequestLeave()
-    {
-        if (CanLeave)
-        {
-            Inventory.BankPending();
-            meta_progress_model.Commit();
-            OnRewardsBanked?.Invoke();
-            Zones.Reset();
-            RefreshZoneView();
-            ChangeState(RunState.Ready);
-            PersistProgress();
+            events.Publish(new RunStateChangedEvent(state_machine.State));
             return true;
         }
         return false;
     }
 
-    public bool IsTransitioningToDeath
+    internal void RequestSpin()
     {
-        get
+        if (ChangeState(RunState.Spinning))
         {
-            return GameRules.IsTransitioningToDeath(current_state, last_result);
+            last_result = result_picker.Spin();
+            last_settlement = last_result.IsDeath
+                ? default(RewardSettlement)
+                : GameRules.ResolveRewardSettlement(last_result, meta_progress_model);
+
+            wheel_controller.SpinToSlice(last_result.slice_idx, config.spinTiming);
         }
     }
 
-    public bool TryRevive()
+    internal void NotifyWheelSpinCompleted()
     {
-        if (GameRules.CanRevive(current_state, last_result, CanAffordRevive()) && revive_system.TryRevive(inventory))
+        HandleWheelSpinCompleted();
+    }
+
+    internal void NotifyRewardFeedbackCompleted()
+    {
+        HandleRewardFeedbackCompleted();
+    }
+
+    internal void NotifyExitFlowStateChanged(ExitFlowState current_state)
+    {
+        events.Publish(new ExitFlowStateChangedEvent(current_state));
+    }
+
+    internal void RequestLeave()
+    {
+        if (!CanLeave)
         {
-            PersistProgress();
-            WheelVisual revive_zone = config.safeZone;
-            if (!LoadWheel(revive_zone, Zones.CurrentZone))
+            return;
+        }
+
+        inventory.BankPending();
+        meta_progress_model.Commit();
+        PublishCurrencyChanged();
+        events.Publish(new RunPendingClearedEvent());
+        zone_manager.Reset();
+        LoadCurrentZone();
+    }
+
+    internal bool IsDeathFlowActive
+    {
+        get
+        {
+            return GameRules.IsDeathFlowActive(state_machine.State, last_result);
+        }
+    }
+
+    internal bool TryRevive()
+    {
+        if (GameRules.CanRevive(state_machine.State, last_result))
+        {
+            if (!revive_system.TryRevive(inventory))
             {
                 return false;
             }
 
-            ChangeState(RunState.PostReviveLocked);
-            OnRevived?.Invoke();
+            if (!ChangeState(RunState.PostReviveLocked))
+            {
+                return false;
+            }
+
+            LoadZone(zone_manager.GetZoneVisual(zone_manager.CurrentZone), zone_manager.CurrentZone, true);
+            PublishCurrencyChanged();
             return true;
         }
         return false;
     }
 
-    public void Restart()
+    internal void Restart()
     {
         revive_system.Reset();
-        Inventory.ClearPending();
-        Zones.Reset();
+        inventory.ClearPending();
+        zone_manager.Reset();
         meta_progress_model.Revert();
-        OnRunEnded?.Invoke();
+        events.Publish(new RunPendingClearedEvent());
 
-        RefreshZoneView();
-        ChangeState(RunState.Ready);
-        PersistProgress();
-    }
-
-    private void PersistProgress()
-    {
-        PlayerProgress.Save(inventory.Cash, inventory.Gold, inventory.BankedForSave, revive_system.ReviveCount);
-    }
-
-    void OnApplicationPause(bool paused)
-    {
-        if (paused)
+        LoadCurrentZone();
+        if (state_machine.Reset(RunState.Ready))
         {
-            PersistProgress();
+            events.Publish(new RunStateChangedEvent(state_machine.State));
         }
     }
 
-    void OnApplicationQuit()
+    private void HandleRewardFeedbackCompleted()
     {
-        PersistProgress();
+        if (GameRules.CanCompleteRewardFeedback(state_machine.State, last_result) && ChangeState(RunState.Ready))
+        {
+            AdvanceZone();
+        }
     }
 
-    private void OnSpinAnimationComplete()
+    private void HandleWheelSpinCompleted()
     {
-        wheel_controller.HighlightSlice(last_result.slice_idx);
-        wheel_controller.ShineSlice(last_result.slice_idx);
-        ChangeState(RunState.Landing);
+        if (ChangeState(RunState.Reward))
+        {
+            wheel_controller.RevealSlice(last_result.slice_idx);
+            ApplySpinResult();
+        }
     }
 
-    #region Reward Progress
-
-    //i split the reward here, meta gets first chance if it tracks this reward
-    //anything extra goes to reward list later, otherwise the reward goes straight there
-    //defer_overflow just means wait for the card fill before flying the leftover
     private void ApplySpinResult()
     {
-        WheelResultPicker.ComputedSlot slot = result_picker.GetSlot(last_result.slice_idx);
-
-        if (last_result.is_death)
+        if (last_result.IsDeath)
         {
-            OnDeathHit?.Invoke();
+            if (ChangeState(RunState.DeathGameOver))
+            {
+                events.Publish(new RunDeathHitEvent());
+            }
         }
         else
         {
-            ZoneRewardEntry entry = slot.entry;
-            MetaProgressModel.ProgressAllocation alloc = meta_progress_model.AllocateProgress(entry.reward, last_result.amount);
-            RewardRouteInfo route = GameRules.BuildRewardRoute(meta_progress_model, entry, alloc);
-            if (alloc.overflow_amount > 0)
-            {
-                Inventory.AddPending(route.reward_for_reward_list, alloc.overflow_amount);
-            }
-
-            OnRewardEarned?.Invoke(last_result, slot.entry, alloc, route);
+            reward_feedback.PlayReward(last_result, last_settlement);
         }
     }
 
-    #endregion
+    internal int ApplyRewardListArrival(RewardDefinition reward, int amount)
+    {
+        return inventory.AddPendingAndGetTotal(reward, amount);
+    }
 
     private void AdvanceZone()
     {
-        Zones.Advance();
-        RefreshZoneView();
+        zone_manager.Advance();
+        LoadCurrentZone();
     }
 
-    private void RefreshZoneView()
+    private void LoadCurrentZone()
     {
-        WheelVisual zone = Zones.CurrentZoneVisual;
-
-        if (!LoadWheel(zone, Zones.CurrentZone))
-        {
-            return;
-        }
-        OnZoneChanged?.Invoke(Zones.CurrentZone);
+        LoadZone(zone_manager.GetZoneVisual(zone_manager.CurrentZone), zone_manager.CurrentZone);
+        events.Publish(new RunZoneChangedEvent(zone_manager.CurrentZone));
     }
 
-    private bool LoadWheel(WheelVisual zone, int zone_idx)
+    private void PublishCurrencyChanged()
     {
-        wheel_controller.ClearShine();
-        if (!result_picker.LoadZone(zone, zone_idx))
-        {
-            return false;
-        }
+        events.Publish(new RunCurrencyChangedEvent(inventory.Cash, inventory.Gold));
+    }
+
+    private void LoadZone(WheelVisual zone, int zone_idx, bool revive = false)
+    {
+        result_picker.LoadZone(zone, zone_idx, revive);
         wheel_controller.BuildForZone(zone, result_picker.WheelSlots);
-        return true;
-    }
-}
-
-[Flags]
-public enum BusySource
-{
-    None = 0,
-    Meta = 1 << 0,
-    Fly = 1 << 1,
-}
-
-public struct RewardRouteInfo
-{
-    public bool is_tracked_by_meta;
-    public bool defer_overflow_until_meta_complete;
-    public RewardDefinition reward_for_reward_list;
-}
-
-public class ZoneManager
-{
-    private readonly WheelConfig config;
-    private int current_zone;
-
-    public int CurrentZone => current_zone;
-
-    public int FirstZoneIndex => config.FirstZoneIndex;
-
-    public int MaxZoneIndex => config.MaxZoneIndex;
-
-    public WheelVisual CurrentZoneVisual => GetZoneVisual(current_zone);
-
-    public RewardTier CurrentZoneTier => GetZoneTier(current_zone);
-
-    public bool CanExitCurrentZone
-    {
-        get
-        {
-            return GameRules.CanExitZone(CurrentZoneTier, config.ExitRules);
-        }
-    }
-
-    public ZoneManager(WheelConfig config)
-    {
-        if (config == null)
-        {
-            throw new ArgumentNullException(nameof(config));
-        }
-        this.config = config;
-        current_zone = FirstZoneIndex;
-    }
-
-    public void Reset()
-    {
-        current_zone = FirstZoneIndex;
-    }
-
-    public void Advance()
-    {
-        current_zone = GameRules.NextZoneIndex(config, current_zone);
-    }
-
-    public WheelVisual GetZoneVisual(int zone_idx)
-    {
-        return GameRules.GetZoneVisual(config, zone_idx);
-    }
-
-    public RewardTier GetZoneTier(int zone_idx)
-    {
-        return GameRules.GetZoneTier(config, zone_idx);
     }
 }
 }
