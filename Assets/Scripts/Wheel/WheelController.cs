@@ -29,7 +29,6 @@ public class WheelController : MonoBehaviour
 
     private void OnEnable()
     {
-        event_pass.Subscribe<RunPendingClearedEvent>(HandlePendingCleared);
         event_pass.Subscribe<RunDeathHitEvent>(HandleDeathHit);
     }
 
@@ -54,11 +53,6 @@ public class WheelController : MonoBehaviour
             HighlightSlice(slice_idx);
             ShineSlice(slice_idx);
         }
-    }
-
-    private void HandlePendingCleared(RunPendingClearedEvent _)
-    {
-        CleanupRunView();
     }
 
     private void HandleDeathHit(RunDeathHitEvent _)
@@ -152,6 +146,5 @@ public class WheelController : MonoBehaviour
     {
         controller.NotifyWheelSpinCompleted();
     }
-
 }
 }
