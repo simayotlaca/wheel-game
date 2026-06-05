@@ -10,8 +10,7 @@
 
 <br/><br/>
 
-<img src="Docs/Screenshots/gameplay_20-9.gif" width="720" alt="Gameplay preview"/>
-
+<img src="Docs/Screenshots/gameplay_20-9-new.gif" width="720" alt="Gameplay preview"/>
 </div>
 
 <br/>
