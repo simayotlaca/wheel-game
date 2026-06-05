@@ -1,40 +1,34 @@
 <div align="center">
 
-### 🎀 Vertigo Wheel of Fortune 🎡
+### 👾 Spin Wheel Card Reward Game 🫧
 
 <sub><i>Open cases, collect rewards, and test your luck.</i></sub>
 
 <br/>
-
-<img alt="Unity 2021 LTS" src="https://img.shields.io/badge/Unity_2021_LTS-D4799F?style=flat-square&logo=unity&logoColor=white"/>&nbsp;<img alt="Android" src="https://img.shields.io/badge/Android-1F1F23?style=flat-square&logo=android&logoColor=D4799F"/>&nbsp;<img alt="Pure C#" src="https://img.shields.io/badge/Pure_C%23-D4799F?style=flat-square&logo=csharp&logoColor=white"/>&nbsp;<img alt="Multi-Aspect UI" src="https://img.shields.io/badge/Multi--Aspect_UI-1F1F23?style=flat-square&logoColor=D4799F"/>
-
-<br/><br/>
 
 <img src="Docs/Screenshots/gameplay_20-9-new.gif" width="720" alt="Gameplay preview"/>
 </div>
 
 <br/>
 
-A Unity case study for the **Vertigo Games** developer brief. Spin the wheel, hoard rewards in a pending stash, exit before a bomb ends the run.
-
-#### 🌸 How to Play
+#### 🎮 How to Play
 
 | Action | Effect |
 |---|---|
-| Tap **SPIN** | The wheel turns; a reward lands in your *pending* stash |
-| Tap **EXIT** | Pending rewards move into your inventory |
-| Every 5th spin | Safe zone, no bombs |
-| Every 30th spin | Super zone |
-| Normal zones | A bomb may land. If it does, the run ends |
-| Revive | Pay gold to keep your loot. Each revive costs more |
-| Persistence | Banked rewards survive between sessions (PlayerPrefs) |
+| Tap **SPIN** | Spins the wheel and picks one of the 8 slots |
+| Get a reward | Adds the reward to the current run |
+| Complete a skin card | Finishes that skin card; extra points go to the general puzzle reward |
+| Tap **EXIT** | Saves the rewards collected in the current run |
+| Hit death | Player either gives up the run or spends gold to continue |
+| Give up / restart | Clears the current run rewards and rolls back unfinished skin progress |
+| Zone rules | Every 5th zone is safe, every 30th zone is super |
 
 #### ✨ Technical Highlights
 
-- Pure C# wheel logic separated from the Unity scene lifecycle
-- Deterministic rebuild pipeline for scene/UI generation
-- ScriptableObject-driven reward and zone configuration
-- Lightweight pooled UI elements for repeated spin flows
+- `RunSession` controls the main game flow
+- Wheel rewards are picked by category quotas, with icon and `visualFamily` checks to avoid repetitive-looking slots
+- UI panels react to run events instead of calling each other directly
+- Reused UI objects for wheel slices, reward rows, and flying reward icons
 
 **Animation Stack** &nbsp;·&nbsp; *PrimeTween, struct-based, allocation-conscious*
 
