@@ -65,11 +65,6 @@ internal static class GameRules
             && CanTransition(state, RunState.PostReviveLocked);
     }
 
-    internal static bool CanCompleteRewardFeedback(RunState state, SpinResult last_result)
-    {
-        return !last_result.IsDeath && CanTransition(state, RunState.Ready);
-    }
-
     internal static RewardSettlement ResolveRewardSettlement(
         SpinResult result,
         MetaProgressModel meta_progress_model)
