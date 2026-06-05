@@ -279,7 +279,7 @@ public class RunSession : MonoBehaviour
 
     private void HandleRewardFeedbackCompleted()
     {
-        if (GameRules.CanCompleteRewardFeedback(state_machine.State, last_result) && ChangeState(RunState.Ready))
+        if (ChangeState(RunState.Ready))
         {
             AdvanceZone();
         }
